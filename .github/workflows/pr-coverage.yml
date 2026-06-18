@@ -46,8 +46,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Coverage Report
           update-comment: true
-          source-paths: >
-            aeroparker-subscription-booking/src/main/java,
-            aeroparker-subscription-payments/src/main/java,
-            aeroparker-subscription-utils/src/main/java,
-            aeroparker-subscription-db-config/src/main/java
