@@ -32,6 +32,13 @@
             </properties>
             <repositories>
                 <repository>
+                    <id>ci-local</id>
+                    <url>file://${user.dir}/.ci-maven-repo</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
                     <id>maven-central</id>
                     <url>${url.central}</url>
                 </repository>
