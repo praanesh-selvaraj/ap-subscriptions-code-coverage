@@ -1,0 +1,5 @@
+/target/
+/src/main/java/
+/src/main/generated/
+/.project
+/.classpath

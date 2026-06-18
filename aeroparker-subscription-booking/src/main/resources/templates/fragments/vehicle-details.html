@@ -1,0 +1,94 @@
+<div class="form__section form__section"
+	th:if="${config.showVehicleDetails()}" th:fragment="vehicle-details">
+	<input type="hidden" id="vehicleLookupAttributes" th:unrecognisedPlateValidation="${unrecognisedPlateValidation}" th:shouldShowVehicleLookup="${shouldShowVehicleLookup}" th:lookupMode="${lookupMode}" th:affiliateId="${affiliateId}"/>
+	<div class="form__heading">
+		<h2 th:text="${languageFieldsList.getTranslation('Vehicle Details')}">Vehicle
+			Details</h2>
+	</div>
+	<div class="form__content">
+		<div class="form__row"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.CAR_COUNTRY.id)}">
+			<div class="form-group form-group--vm">
+				<label for="carreg"
+					th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.CAR_COUNTRY.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.CAR_COUNTRY.id) ? '*' : '')}">Country
+					*</label>
+				<div
+					class="custom-select-wrap form-control form-control--ib form-control--select" th:with="belgium='Belgium', france='France', germany='Germany', gb='Great Britain', europe='Netherlands (Holland, Europe)', poland='Poland', other='Other'">
+					<select id="carCountry" name="carCountry" class="custom-select">
+						<option value="B" th:text="${languageFieldsList.getTranslation(belgium)}" th:selected="${#strings.equals(carCountry, belgium)}">Belgium</option>
+						<option value="F" th:text="${languageFieldsList.getTranslation(france)}" th:selected="${#strings.equals(carCountry, france)}">France</option>
+						<option value="D" th:text="${languageFieldsList.getTranslation(germany)}" th:selected="${#strings.equals(carCountry, germany)}">Germany</option>
+						<option value="GB" th:text="${languageFieldsList.getTranslation(gb)}" th:selected="${#strings.equals(carCountry, gb)}">Great Britain</option>
+						<option value="NL" th:text="${languageFieldsList.getTranslation(europe)}" th:selected="${#strings.equals(carCountry, europe)}">Netherlands (Holland, Europe)</option>
+						<option value="PL" th:text="${languageFieldsList.getTranslation(poland)}" th:selected="${#strings.equals(carCountry, poland)}">Poland</option>
+						<option value="Other" th:text="${languageFieldsList.getTranslation(other)}" th:selected="${#strings.equals(carCountry, other)}">Other</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="form__row"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.CAR_REGISTRATION.id)}">
+			<div id="regLookupError" class="alert alert-danger" style="display: none;" th:text="${languageFieldsList.getTranslation('The vehicle data was not found, please enter the details manually or try again')}">
+			</div>
+			<div class="form-group form-group--vm" th:style="${shouldShowVehicleLookup} ? 'display: flex;' : ''">
+				<label for="carreg"
+					th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.CAR_REGISTRATION.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.CAR_REGISTRATION.id) ? '*' : '')}">License
+					Plate</label> <input type="text" id="carReg" name="carReg"
+					class="form-control form-control--ib" th:value="*{carReg}"
+					data-parsley-trigger="keyup focusout submit"
+					data-parsley-maxlength="20"
+					th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your car registration') + '.'}"
+					th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.CAR_REGISTRATION.id)}" />
+				<div th:if="${shouldShowVehicleLookup}">
+					<input th:if="${lookupMode == 'MANUAL'}" 
+						id="vehicleLookupButton" style="margin-left: 5px" type="button" class="btn btn-primary subscribe-btn" th:value="${languageFieldsList.getTranslation('Look up car details')}" th:affiliateId="${affiliateId}" th:onclick="doVehicleLookup(this.getAttribute('affiliateId'))"/>
+				</div>
+			</div>
+			<div th:if="${shouldShowVehicleLookup}">
+				<div id="staticVehicleDetailsContainer">
+					<div class="manualDetailsLink">
+						<a th:onclick="enableManualVehicleDetailsEntry()" th:text="${languageFieldsList.getTranslation('Click here to enter vehicle details manually.')}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="manualVehicleDetails" style="margin-top: 20px;">
+			<div class="form__row"
+				th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.CAR_MAKE.id)}">
+				<div class="form-group form-group--vm">
+					<label for="carmake"
+						th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.CAR_MAKE.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.CAR_MAKE.id) ? '*' : '')}">Car
+						Make *</label> <input type="text" id="carmake" name="carmake"
+						class="form-control form-control--ib" th:value="${carmake}"
+						data-parsley-trigger="keyup focusout submit"
+						th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your vehicle make') + '.'}"
+						th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.CAR_MAKE.id)}" />
+				</div>
+			</div>
+			<div class="form__row"
+				th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.CAR_MODEL.id)}">
+				<div class="form-group form-group--vm">
+					<label for="carmodel"
+						th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.CAR_MODEL.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.CAR_MODEL.id) ? '*' : '')}">Car
+						Model *</label> <input type="text" id="carmodel" name="carmodel"
+						class="form-control form-control--ib" th:value="${carmodel}"
+						data-parsley-trigger="keyup focusout submit"
+						th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your vehicle model') + '.'}"
+						th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.CAR_MODEL.id)}" />
+				</div>
+			</div>
+			<div class="form__row"
+				th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.CAR_COLOUR.id)}">
+				<div class="form-group form-group--vm">
+					<label for="carcol"
+						th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.CAR_COLOUR.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.CAR_COLOUR.id) ? '*' : '')}">Car
+						Colour</label> <input type="text" id="carcol" name="carcol"
+						class="form-control form-control--ib" th:value="${carcol}"
+						data-parsley-trigger="keyup focusout submit"
+						th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your vehicle colour') + '.'}"
+						th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.CAR_COLOUR.id)}" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

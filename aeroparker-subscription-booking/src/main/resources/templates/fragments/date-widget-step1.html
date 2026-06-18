@@ -1,0 +1,29 @@
+<div class="booking-bar booking-bar--subscriptions" 
+	th:attr="data-date-input-format=${dateInputFormat},
+			data-date-display-format=${dateDisplayFormat}, 
+			data-start-date=${datePickerStartDate},
+			data-end-date=${datePickerStartDate},
+			data-entry-date=${datePickerStartDate},
+			data-fixed-start-day=${datePickerfixedStartDay},
+			data-calendar-start-day=${calendarStartDay}"
+			data-date-today-highlight="true"
+		    data-date-autoclose="true"
+		    data-start-time="08:00"
+		    data-disable-auto-select-exit="false"
+		    data-datepicker-type="widget-subscriptions"
+    th:fragment="date-widget-step1">
+    <form id="changeDate" class="form" th:action="@{dates}"  method="post">
+       <div class="booking-bar__col cf">
+         <div class="booking-bar__date">
+           <label for="changeEntryDate" th:text="${languageFieldsList.getTranslation('Start date')}">Start date</label>
+           <div id="editEntryDate">
+             <input type="text" name="startDate" id="changeEntryDate" readonly="readonly"/>
+           </div>
+         </div>
+       </div>
+       <!--/.booking-bar__col -->
+       <div class="booking-bar__col">
+         <input type="submit" class="btn btn--submit btn-primary" th:value="${languageFieldsList.getTranslation('Search')}">
+       </div>
+   </form>
+</div>

@@ -1,0 +1,12 @@
+<div th:fragment="crm-opt-ins" th:if="${config.showOptIn}"
+	th:with="affiliateCrmOptIn=${T(com.kmp.aeroparker.application.model.enums.AffiliateCrmOptIn)}" th:remove="tag">
+	<div class="check-group"
+		th:each="crmOptIn : ${config.affiliatesCrmOptIn}"
+		th:with="enabledCrmOptIn=${affiliateCrmOptIn.getById(crmOptIn.type)}">
+		<input type="checkbox" th:id="${enabledCrmOptIn.name}"
+			th:name="${enabledCrmOptIn.name}"
+			th:checked=${crmOptIn.defaultChecked}> <label
+			th:for="${enabledCrmOptIn.name}"
+			th:utext="${languageFieldsList.getTranslation(crmOptIn.message)}"></label>
+	</div>
+</div>

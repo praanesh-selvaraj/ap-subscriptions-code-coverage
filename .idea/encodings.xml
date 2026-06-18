@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-booking-generated/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-booking-generated/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-booking/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-booking/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-db-config/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-db-config/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-payments-generated/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-payments-generated/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-payments/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-payments/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-utils/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aeroparker-subscription-utils/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

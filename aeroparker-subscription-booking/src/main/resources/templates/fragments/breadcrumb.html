@@ -1,0 +1,26 @@
+<div  th:fragment="breadcrumb" th:class="${currentStage == 1} ? 'breadcrumb breadcrumb--step1' : 'breadcrumb'">
+  	<div class="container">
+  		<ol class="breadcrumb__group">
+        	<li class="breadcrumb__item">
+ 				<a th:href="@{${(currentStage > 1 && currentStage < 4) ?  'dates' : '#'}}" data-link-backlink>
+   					<div class="breadcrumb__item__title" th:classappend="${currentStage == 1} ? 'breadcrumb\_\_item\_\_title--active' : (${currentStage > 1} ? 'breadcrumb\_\_item\_\_title--complete' : '')">1</div>
+   					<div th:class="${'breadcrumb\_\_item\_\_text' + (#strings.equals(textLight, true) ? ' breadcrumb\_\_item\_\_text--light' : '')}" th:text="${languageFieldsList.getTranslation('Subscription Details')}">Subscription Details</div>
+ 				</a>
+  			</li>
+  			<li class="breadcrumb__item" th:if="${!skipProductSelection}">
+  				<a th:href="@{${(currentStage > 2 && currentStage < 4) ? 'products?startDate=' + startDate + (isMultiPurchase ? '&customerGuid=' + customerGuid : ''  ) : '#'}}">
+   					<div class="breadcrumb__item__title" th:classappend="${currentStage == 2} ? 'breadcrumb\_\_item\_\_title--active' : (${currentStage > 2} ? 'breadcrumb\_\_item\_\_title--complete' : '')">2</div>
+   					<div th:class="${'breadcrumb\_\_item\_\_text' + (#strings.equals(textLight, true) ? ' breadcrumb\_\_item\_\_text--light' : '')}" th:text="${languageFieldsList.getTranslation('Select Product')}">Select Product</div>
+				</a>
+  			</li>
+  			<li class="breadcrumb__item">
+				<div class="breadcrumb__item__title" th:classappend="${currentStage == 3} ? 'breadcrumb\_\_item\_\_title--active' : (${currentStage > 3} ? 'breadcrumb\_\_item\_\_title--complete' : '')" th:text="${skipProductSelection ? 2 : 3}">3</div>
+				<div th:class="${'breadcrumb\_\_item\_\_text' + (#strings.equals(textLight, true) ? ' breadcrumb\_\_item\_\_text--light' : '')}" th:text="${languageFieldsList.getTranslation('Your details')}">Your details</div>
+  			</li>
+  			<li class="breadcrumb__item">
+  				<div class="breadcrumb__item__title" th:classappend="${currentStage == 4} ? 'breadcrumb\_\_item\_\_title--active' : (${currentStage > 4} ? 'breadcrumb\_\_item\_\_title--complete' : '')" th:text="${skipProductSelection ? 3 : 4}">4</div>
+  				<div th:class="${'breadcrumb\_\_item\_\_text' + (#strings.equals(textLight, true) ? ' breadcrumb\_\_item\_\_text--light' : '')}" th:text="${languageFieldsList.getTranslation('Confirmation')}">Confirmation</div>
+  			</li>
+  		</ol>
+  	</div>
+</div>

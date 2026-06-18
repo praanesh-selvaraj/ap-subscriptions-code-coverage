@@ -1,0 +1,41 @@
+<footer class="footer-main" th:fragment="footer">
+	<div class="footer-main__upper">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-sm-push-8">
+					<div class="fake-table">
+						<div class="fake-table__cell"
+							th:with="paymentLogoUrl=${affiliateDisplay?.paymentLogoUrl}, uploadUrl=${requestBean.uploadUrl}, siteId=${requestBean.siteId}">
+							<img th:with="paymentLogoUrlComplete=${#strings.startsWith(paymentLogoUrl, 'http') ? paymentLogoUrl : #strings.startsWith(paymentLogoUrl, '/logos') ? uploadUrl + paymentLogoUrl : uploadUrl + '/paymentlogos/' + siteId + '/' + paymentLogoUrl}"
+								th:src="${paymentLogoUrlComplete}" alt="Credit Card Logos">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8 col-sm-pull-4">
+					<ul class="footer-main__nav" id="footerList">
+						<li th:if="${not #strings.isEmpty(affiliateDisplay?.privacyPolicyUrl)}"><a th:href="${affiliateDisplay?.privacyPolicyUrl}" target="_blank" th:text="${languageFieldsList.getTranslation('Privacy Policy')}">Privacy Policy</a></li>
+						<li th:if="${not #strings.isEmpty(affiliateDisplay?.legalNoticeUrl)}"><a th:href="${affiliateDisplay?.legalNoticeUrl}" target="_blank" th:text="${languageFieldsList.getTranslation('Legal Notice')}">Legal Notice</a></li>
+						<li th:if="${not #strings.isEmpty(affiliateDisplay?.termsUrl)}"><a th:href="${affiliateDisplay?.termsUrl}" target="_blank" th:text="${languageFieldsList.getTranslation('Terms of Use')}">Terms of Use</a></li>
+						<li th:if="${not #strings.isEmpty(affiliateDisplay?.cookiesUrl)}"><a th:href="${affiliateDisplay?.cookiesUrl}" target="_blank" th:text="${languageFieldsList.getTranslation('Cookie Policy')}">Cookie Policy</a></li>
+						<li th:if="${not #strings.isEmpty(affiliateDisplay?.cancellationTermsUrl)}"><a th:href="${affiliateDisplay?.cancellationTermsUrl}" target="_blank" th:text="${languageFieldsList.getTranslation('Cancellation Terms')}">Cancellation Terms</a></li>	
+						<li th:if="${not #strings.isEmpty(affiliateDisplay?.onlineDisputeResolutionUrl)}"><a th:href="${affiliateDisplay?.onlineDisputeResolutionUrl}" target="_blank" th:text="${languageFieldsList.getTranslation('Online Dispute Resolution')}">Online Dispute Resolution</a></li>
+						<li th:if="${not #strings.isEmpty(affiliateDisplay?.faqsUrl)}"><a th:href="${affiliateDisplay?.faqsUrl}" target="_blank" th:text="${languageFieldsList.getTranslation('FAQs')}">FAQs</a></li>	
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer-main__lower">
+		<div class="container">
+			<p><small th:inline="text">&copy; [(${requestBean.currentYear + ' ' + requestBean.affiliate.name})].<br class="hide-screen" th:text="${languageFieldsList.getTranslation('All rights reserved') + '.'}"></small></p>
+		</div>
+	</div>
+	<div style="display: none">
+		<ul id="footerListLinks">
+			<li th:each="footerLink : ${requestBean?.affiliatesFooterPages}" th:if="${footerLink?.enabled}">
+				<a th:if="${footerLink?.isLink}" th:href="${footerLink.url}" th:utext="${footerLink?.linkTitle}" target="_blank"></a>
+				<a th:unless="${footerLink?.isLink}" th:href="${'content?title=' + footerLink?.urlTitle}" th:utext="${footerLink?.linkTitle}" target="_blank"></a>
+			</li>
+		</ul>
+	</div>
+</footer>

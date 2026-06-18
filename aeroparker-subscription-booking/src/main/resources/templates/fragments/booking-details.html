@@ -1,0 +1,116 @@
+<section class="account" th:fragment="booking-details">
+    <div class="container">
+		<div class="alert alert-danger text-center" th:if="${!#strings.isEmpty(errorMessage)}" th:text="${languageFieldsList.getTranslation(errorMessage)}"/>
+		<div class="manage-booking">
+	        <div class="row">
+				<div class="col-sm-12 col-md-9 manage-booking__content">
+					<div class="manage-booking__header">
+						<h2 th:text="${languageFieldsList.getTranslation(affSubSettings?.referToBookingReferenceAs ?: 'Booking Ref')} + ': ' + ${bookingDataList.get(0).subscriptionReference}"></h2>
+					</div>
+					<div class="row row-eq-height" th:with="customerDetails=${bookingDataList.get(0)}, multipleCarParks=${bookingCarParks != null and !bookingCarParks.isEmpty()}">
+						<div class="col-sm-6 manage-booking__details">
+							<h3 th:text="${languageFieldsList.getTranslation('Your Details')}"></h3>
+							<dl>
+								<dt th:if="${!#strings.isEmpty(customerDetails.customerName)}" th:text="${languageFieldsList.getTranslation('Name')} + ':'"></dt>
+								<dd th:if="${!#strings.isEmpty(customerDetails.customerName)}" th:text="${customerDetails.customerName}"></dd>
+								<dt th:if="${!#strings.isEmpty(customerDetails.customerEmail)}" th:text="${languageFieldsList.getTranslation('Email')} + ':'"></dt>
+								<dd class="field-wrap" th:if="${!#strings.isEmpty(customerDetails.customerEmail)}" th:text="${customerDetails.customerEmail}"></dd>
+								<dt th:if="${!#strings.isEmpty(customerDetails.customerMobileNumber)}" th:text="${languageFieldsList.getTranslation('Phone')} + ':'"></dt>
+								<dd th:if="${!#strings.isEmpty(customerDetails.customerMobileNumber)}" th:text="${customerDetails.customerMobileNumber}"></dd>
+								<dt th:if="${!#strings.isEmpty(customerAddress)}" th:text="${languageFieldsList.getTranslation('Address')} + ':'"></dt>
+								<dd th:if="${!#strings.isEmpty(customerAddress)}" th:text="${customerAddress}"></dd>
+								<dt th:if="${!#strings.isEmpty(customerDetails.customerCompanyName)}" th:text="${languageFieldsList.getTranslation('Company Name')}"></dt>
+								<dd th:if="${!#strings.isEmpty(customerDetails.customerCompanyName)}" th:text="${customerDetails.customerCompanyName}">
+							</dl>
+							<div th:if="${showCardDetails}">
+								<hr>
+								<h3 th:text="${languageFieldsList.getTranslation('Card Details')}"></h3>
+								<dl>
+									<dt th:if="${!#strings.isEmpty(customerDetails.cardNumber)}" th:text="${languageFieldsList.getTranslation('Card Number')} + ':'"></dt>
+									<dd th:if="${!#strings.isEmpty(customerDetails.cardNumber)}" th:text="${customerDetails.cardNumber}"></dd>
+									<dt th:if="${!#strings.isEmpty(customerDetails.cardExpiryDate)}" th:text="${languageFieldsList.getTranslation('Card Expiry Date')} + ':'"></dt>
+									<dd th:if="${!#strings.isEmpty(customerDetails.cardExpiryDate)}" th:text="${customerDetails.cardExpiryDate}"></dd>
+									<dt th:if="${!#strings.isEmpty(customerDetails.paymentMethod)}" th:text="(${#strings.isEmpty(customerDetails.cardNumber)} ? ${languageFieldsList.getTranslation('Payment Method')} : ${languageFieldsList.getTranslation('Card Type')}) + ':'"></dt>
+									<dd th:if="${!#strings.isEmpty(customerDetails.paymentMethod)}" th:text="${customerDetails.paymentMethod}"></dd>
+								</dl>
+							</div>
+							<div th:if="${showVehicleDetails}">
+								<hr>
+								<h3 th:text="${languageFieldsList.getTranslation('Vehicle Details')}"></h3>
+								<dl>
+									<dt th:if="${!#strings.isEmpty(customerDetails.customerVehicleReg)}" th:text="${languageFieldsList.getTranslation('Car Registration')} + ':'"></dt>
+									<dd th:if="${!#strings.isEmpty(customerDetails.customerVehicleReg)}" th:text="${customerDetails.customerVehicleReg}"></dd>
+									<dt th:if="${!#strings.isEmpty(customerDetails.customerVehicleMake)}" th:text="${languageFieldsList.getTranslation('Car Make')} + ':'"></dt>
+									<dd th:if="${!#strings.isEmpty(customerDetails.customerVehicleMake)}" th:text="${customerDetails.customerVehicleMake}"></dd>
+									<dt th:if="${!#strings.isEmpty(customerDetails.customerVehicleModel)}" th:text="${languageFieldsList.getTranslation('Car Model')} + ':'"></dt>
+									<dd th:if="${!#strings.isEmpty(customerDetails.customerVehicleModel)}" th:text="${customerDetails.customerVehicleModel}"></dd>
+									<dt th:if="${!#strings.isEmpty(customerDetails.customerVehicleColour)}" th:text="${languageFieldsList.getTranslation('Car Colour')} + ':'"></dt>
+									<dd th:if="${!#strings.isEmpty(customerDetails.customerVehicleColour)}" th:text="${customerDetails.customerVehicleColour}"></dd>
+								</dl>
+							</div>
+						</div>
+						<div class="col-sm-6 manage-booking__details">
+							<h3 th:text="${languageFieldsList.getTranslation('Your Subscription')}"></h3>
+							<dl>
+								<dt th:text="${languageFieldsList.getTranslation(affSubSettings?.referToBookingReferenceAs ?: 'Booking Reference')} + ':'"></dt>
+								<dd th:text="${customerDetails.subscriptionReference}"></dd>
+								<th:block th:each="bookingData : ${bookingDataList}" th:with="isRecurring=${#strings.equals(bookingData.subscriptionType, 'RECURRING')}">
+									<dt style="margin-top: 10px" th:text="${languageFieldsList.getTranslation('Product')} + ':'"></dt>
+									<dd style="margin-top: 10px" th:text="${bookingData.productName}"></dd>
+									<th:block th:if="${showCarParks}">
+										<dt th:text="${languageFieldsList.getTranslation('Car Park')} + ':'"></dt>
+										<th:block th:if="${multipleCarParks}" th:each="carPark, iter : ${bookingCarParks}">
+											<dt th:if="${iter.index != 0}"></dt>
+											<dd th:utext="${carPark.name}"></dd>
+										</th:block>
+										<dd th:if="${!multipleCarParks}" th:utext="${bookingData.carparkName}"></dd>
+									</th:block>
+									<dt th:text="${languageFieldsList.getTranslation('Start Date')} + ':'"></dt>
+									<dd th:text="${localise.longDateTranslated(bookingData.startDate, languageFieldsList)}"></dd>
+									<dt th:text="(${isRecurring} ? ${languageFieldsList.getTranslation('Minimum Term Date')} : ${languageFieldsList.getTranslation('End Date')}) + ':'"></dt>
+									<dd th:text="(${isRecurring} ? (${bookingData.minimumTermLength} + ' ' + ${languageFieldsList.getTranslation('Months')} + ' - ') : '') + ${localise.longDateTranslated(bookingData.endDate, languageFieldsList)}"></dd>
+									<dt th:if="${isRecurring}" th:text="${languageFieldsList.getTranslation('Next Payment Due')} + ':'"></dt>
+									<dd th:if="${isRecurring}" th:text="${localise.longDateTranslated(bookingData.nextPaymentDate, languageFieldsList)}"></dd>
+									<dt th:if="${isRecurring}" th:text="${languageFieldsList.getTranslation('Total Payment to Date')} + ':'"></dt>
+									<dd th:if="${isRecurring}" th:utext="${#maps.containsKey(paymentHistoryMap, bookingData.productName)} ? ${localise.price(paymentHistoryMap.get(bookingData.productName).getTotalPaymentAmount())} : ${localise.price(bookingData.subscriptionPrice)}"></dd>
+									<dt th:if="${!isRecurring}" th:text="${languageFieldsList.getTranslation('Total')} + ':'"></dt>
+									<dd th:if="${!isRecurring}" th:utext="${localise.price(bookingData.subscriptionPrice)}"></dd>
+									<th:block th:if="${bookingData.promoCode != null and !#strings.isEmpty(bookingData.promoCode)}">
+										<dt th:text="${languageFieldsList.getTranslation('Promo Code')} + ':'"></dt>
+										<dd th:text="${bookingData.promoCode}"></dd>
+										<dt th:text="${languageFieldsList.getTranslation('Promo Discount')} + ':'"></dt>
+										<dd th:utext="${localise.price(bookingData.promoDiscount)}"></dd>
+									</th:block>
+								</th:block>
+							</dl>
+							<th:block th:if="${#maps.size(paymentHistoryMap) > 0}">
+								<hr>
+								<h3 th:text="${languageFieldsList.getTranslation('Subscription History')}"></h3>
+								<dl>
+									<dt th:utext="'<strong>' + ${languageFieldsList.getTranslation('Date')} + '</strong>'"><strong></strong></dt>
+									<dd th:utext="'<strong>' + ${languageFieldsList.getTranslation('Amount')} + '</strong>'"><strong></strong></dd>
+									<th:block th:each="paymentHistory : ${paymentHistoryMap}">
+										<th:block th:each="payment : ${paymentHistory.value}">
+											<dt th:text="${localise.date(payment.key)}"></dt>
+											<dd th:utext="${localise.price(payment.value)}"></dd>
+										</th:block>
+									</th:block>
+								</dl>
+							</th:block>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-3 manage-booking__sidebar">
+		           	<a class="btn--keyline" th:if="${showResendConfEmail}" th:data-email="${bookingDataList.get(0).customerEmail}" th:data-reference="${bookingDataList.get(0).subscriptionReference}" 
+		           	onclick="resendConfirmationEmail(this.getAttribute('data-email'), this.getAttribute('data-reference'))" th:text="${languageFieldsList.getTranslation('Resend Confirmation')}"></a>
+		           	<a class="btn--keyline" th:if="${showRenewal}" th:object="${bookingDataList.get(0)}" 
+		           	th:href="@{setup-booking-renewal(email=*{customerEmail}, reference=*{subscriptionReference}, startDate=*{startDate}, endDate=*{endDate})}" th:text="${languageFieldsList.getTranslation('Renew Booking')}"></a>
+		          	<a class="btn--keyline" 
+					th:if="${!disallowChangePersonalDetails}"
+					th:href="@{edit-details}" 
+					th:text="${languageFieldsList.getTranslation('Edit Details')}"></a>
+		        </div>
+	      	</div>
+    	</div>
+	</div>
+</section>

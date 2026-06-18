@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css (styleSheetUrl= ${requestBean.affiliatesDisplay?.styleSheetUrl}, affiliateMetadata=${requestBean.affiliatesMetadata}, favIconPath=${requestBean.affiliatesDisplay?.faviconUrl})" />
+<body>
+	<div class="wrapper wrapper--multipurchase" th:with="affiliateDisplay= ${requestBean.affiliatesDisplay}, affSubDisplay=${requestBean.affiliateSubscription},
+				 affSubDisplayMedia=${requestBean.affiliateSubscriptionMedia} , textLight='true'">
+		<header th:replace="fragments/header-main :: header-main" ></header>
+		<main th:replace="fragments/main :: main" ></main>
+		<footer th:replace="fragments/footer :: footer" ></footer>
+	</div>
+	<div th:replace="fragments/body-scripts :: body-scripts"></div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<div th:fragment="braintree-card-form">
+	<div class="form__instruct" style="display: none; margin-bottom:10px;" id="threeDSError" th:text="${languageFieldsList.getTranslation('Sorry, there was an error processing your payment please try again or try a different card.')}"></div>
+	<div class="form__row">
+		<div class="row row-side-label group form-group form-group--vm" >
+			<label for="card-number" th:text="${languageFieldsList.getTranslation('Card Number') + ' *'}">Card Number *</label>
+		    <div id="card-number" class="input-text hosted-field form-control form-control--ib"></div>
+		    <label class="error" style="display:none; color:#d60007; font-weight:normal; width: 50%;" th:text="${languageFieldsList.getTranslation('Please enter a valid card number.')}">Please enter a valid card number.</label>
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="row row-side-label group form-group form-group--vm" >
+			<div class="conditionalInputFields">				
+				<div class="ie9inputs">
+				   	<label for="expiration-date" class="block-mobile-ib" th:text="${languageFieldsList.getTranslation('Expiry Date') + ' *'}">Expiry Date *</label>
+				   	<div id="expiration-date" class="select-wrapper select-wrapper-split input-text input-text-narrow hosted-field form-control form-control--sml form-control--ib"></div>
+				</div>
+			</div>
+		   	<label class="error" style="display:none; color:#d60007; font-weight:normal;" th:text="${languageFieldsList.getTranslation('Please enter a valid expiry date.')}">Please enter a valid expiry date.</label>
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="row row-side-label group form-group form-group--vm" >
+		   	<label for="cvv" class="block-mobile-ib" th:text="${languageFieldsList.getTranslation('Security Number') + '*'}">Security Number *</label>
+		   	<div id="cvv" class="input-text input-text-narrow hosted-field form-control form-control--sml form-control--ib"></div>
+		   	<div class="security-code security-code-alt"></div>
+			<a href="#" class="popup-button security-popup-button" id="SecurityPopupButton"><span class="icon icon-info"></span></a>
+			<div class="security-card security-card-alt" id="SecurityPopup"></div>
+			<label class="error" style="display:none; color:#d60007; font-weight:normal;" th:text="${languageFieldsList.getTranslation('Please enter a valid security number.')}">Please enter a valid security number.</label>
+		</div>
+	</div>
+</div>

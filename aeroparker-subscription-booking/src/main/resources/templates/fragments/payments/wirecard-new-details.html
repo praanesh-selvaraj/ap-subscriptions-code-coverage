@@ -1,0 +1,51 @@
+<div th:fragment="wirecard-new-details" th:remove="tag">
+	<style>
+	.paymentTypeSelectRow{
+		margin-left: 10px;
+	}
+	#payment-method-selector{
+		margin-bottom: 35px;
+	}
+	</style>
+	<div id="new-details">
+		<span id="wirecardError" style="display: none" class="alert alert-danger" th:text="${languageFieldsList.getTranslation('Wirecard payment did not complete, or was cancelled; please try again')}"></span>
+		<div class="form__row" id="payment-method-selector" style="display:none;">
+			<div class="row row-side-label group form-group form-group--vm">
+				<label th:text="${languageFieldsList.getTranslation('Your payment method')}"></label>
+				<div class="paymentTypeSelectRow">
+					<input id="paymentMethodCard" class="input-radio" type="radio" name="method" onchange="showCard();"
+						th:attr="data-parsley-error-message=${languageFieldsList.getTranslation('Please select a payment method.')}" />
+					<label class="sub-label" for="paymentMethodCard" th:text="${languageFieldsList.getTranslation('Card')}"></label>
+				</div>
+				<div id="payPalRadio" style="display: none;" class="paymentTypeSelectRow">
+					<input id="paymentMethodPayPal" class="input-radio" type="radio" name="method" onchange="showRedirect(2);" 
+						th:attr="data-parsley-error-message=${languageFieldsList.getTranslation('Please select a payment method.')}" data-parsley-required="true" />
+					<label class="sub-label" for="paymentMethodPayPal" th:text="${languageFieldsList.getTranslation('PayPal')}">
+						
+						<a class="paypal-what" href="https://www.paypal.com/webapps/mpp/paypal-popup" 
+							onclick="window.open('https://www.paypal.com/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1200, height=600, left=20, top=20'); return false;" 
+							th:text="${languageFieldsList.getTranslation('more info on PayPal')}">
+						</a>
+					</label>
+				</div>
+				<div id="sofortRadio" style="display: none;" class="paymentTypeSelectRow">
+					<input id="paymentMethodSofort" class="input-radio" type="radio" name="method" onchange="showRedirect(6);" 
+						th:attr="data-parsley-error-message=${languageFieldsList.getTranslation('Please select a payment method.')}" data-parsley-required="true" />
+					<label class="sub-label" for="paymentMethodSofort" th:text="${languageFieldsList.getTranslation('Sofort')}">
+					</label>
+				</div>
+			</div>
+			<span id="payment-method-error" class="error help-block" style="display:none;" th:text="${languageFieldsList.getTranslation('Please select a payment method.')}"></span>
+		</div>
+		<div id="card-container" style="display:none;">
+			<div id="creditcardDataIframe"></div>
+		</div>
+	</div>
+	 
+	<script type="text/javascript">	
+	$(document).ready(function(){
+		$('#payment-method-selector').hide();
+		$('#paymentMethodCard').prop("checked", true);
+	});
+	</script>
+</div>

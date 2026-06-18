@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css (styleSheetUrl= ${requestBean.affiliatesDisplay?.styleSheetUrl}, affiliateMetadata=${requestBean.affiliatesMetadata}, favIconPath=${requestBean.affiliatesDisplay?.faviconUrl})" >
+</head>
+<body>
+	<div class="wrapper wrapper--multipurchase" th:with="affiliateDisplay= ${requestBean.affiliatesDisplay}, affSubDisplay=${requestBean.affiliateSubscription},
+		 affSubDisplayMedia=${requestBean.affiliateSubscriptionMedia}">
+		<div th:replace="fragments/header-main :: header-main" ></div>
+		<main class="bg-1" role="main">
+			<div th:replace="fragments/date-widget-step2 :: date-widget-step2" ></div>
+			<div th:replace="fragments/breadcrumb-step2 :: breadcrumb-step2" ></div>
+			<div th:replace="fragments/back-btn :: back-btn (backUrl='dates')"></div>
+			<div th:replace="fragments/select-products :: select-products" ></div>
+			<footer th:replace="fragments/footer :: footer" ></footer>
+		</main>
+	</div>
+	<div th:replace="fragments/body-scripts :: body-scripts"></div>
+	<script th:src="@{../js/select-products.js}"></script>
+</body>
+</html>

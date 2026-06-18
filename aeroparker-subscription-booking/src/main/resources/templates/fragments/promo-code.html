@@ -1,0 +1,35 @@
+<div class="form__section form__section" th:fragment="promo-code">
+	<!-- Hidden inputs needed for promo validation -->
+	<input type="hidden" id="subscriptionProductId" th:value="${subscriptionProductId}">
+	<input type="hidden" id="customerGuid" th:value="${customerGuid}">
+	<input type="hidden" id="affiliateId" th:value="${affiliateId}">
+
+	<div class="form__heading">
+		<h2 th:text="${languageFieldsList.getTranslation('Promo Code')}">Promo Code</h2>
+	</div>
+	<div class="form__content">
+		<div class="form__row">
+			<div class="form-group form-group--vm">
+				<label for="promoCodeInput"
+					th:text="${languageFieldsList.getTranslation('Enter promo code')}">Enter promo code</label>
+				<input type="text" id="promoCodeInput" name="promoCode"
+					class="form-control form-control--ib"
+					th:placeholder="${languageFieldsList.getTranslation('Enter promo code')}"
+					th:value="${appliedPromoCode != null ? appliedPromoCode : ''}" />
+				<button type="button" id="applyPromoBtn" class="btn btn-primary subscribe-btn"
+					style="margin-left: 5px"
+					th:text="${languageFieldsList.getTranslation('Apply')}">Apply</button>
+			</div>
+		</div>
+		<div class="form__row" id="promoSuccessMessage" style="display: none;">
+			<div class="alert alert-success">
+				<span id="promoSuccessText"></span>
+			</div>
+		</div>
+		<div class="form__row" id="promoErrorMessage" style="display: none;">
+			<div class="alert alert-danger">
+				<span id="promoErrorText"></span>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,5 @@
+<div th:if="${not #strings.isEmpty(paymentError)}" class="global alert" th:fragment="alert">
+	<div class="form__instruct">
+		<p th:text="${languageFieldsList.getTranslation(paymentError)}"></p>
+	</div>
+</div>

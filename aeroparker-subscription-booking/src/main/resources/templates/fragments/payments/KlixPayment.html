@@ -1,0 +1,52 @@
+<div th:fragment="KlixPayment" th:remove="tag">
+	<style>
+	.paymentMethodInputContainer img {
+		margin: 10px;
+	}
+	
+	.paymentLogoSingle {
+		width: 200px;
+	}
+	
+	.paymentLogoList {
+		height: 30px;
+	}
+	
+	@media ( max-width : 1050px) {
+		.paymentLogoList {
+			height: 15px;
+		}
+	}
+	</style>
+
+	<div>
+		<script th:src="@{../js/payments/klix-payment.js}"></script>
+		<th:block th:if="${not #lists.isEmpty(klixPaymentMethods)}">
+			<div id="paymentMethods"
+				class="row-side-label group form-group form-group--vm">
+				<label
+					th:text="${languageFieldsList.getTranslation('Payment Method')}"></label>
+				<div class="radioContainer">
+					<th:block
+						th:each="paymentMethod, paymentMethodStat : ${klixPaymentMethods}">
+						<div class="form-check paymentMethodInputContainer">
+							<input th:id="'paymentMethod_' + ${paymentMethodStat.index}" class="form-check-input"
+								type="radio" name="paymentMethod"
+								th:value='${paymentMethod.whitelistJson}' th:checked="${paymentMethodStat.index == 0}" />
+							<label class="form-check-label" style="display: inline-block;"
+								th:for="'paymentMethod_' + ${paymentMethodStat.index}"
+								th:text="${languageFieldsList.getTranslation(paymentMethod.label)}">
+							</label>
+							<div>
+								<th:block th:each="logoUrl : ${paymentMethod.logoUrls}">
+									<img th:src="${logoUrl}"
+										th:class="${paymentMethod.logoUrls.size() > 1 ? 'paymentLogoList' : 'paymentLogoSingle'}" />
+								</th:block>
+							</div>
+						</div>
+					</th:block>
+				</div>
+			</div>
+		</th:block>
+	</div>
+</div>

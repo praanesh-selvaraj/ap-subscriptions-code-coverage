@@ -1,0 +1,24 @@
+<div th:fragment="body-scripts" th:remove="tag">
+	<script th:src="@{../js/bower.min.js(v=${jsCssQueryString})}"></script>
+	<!--
+		This has to be placed after bower.min.js (when the datepicker is created)
+		and ui.min.js (when datepicker() is called)
+	-->
+	<script th:inline="javascript">
+		$.fn.datepicker.dates['en'] = {
+			days: [[${days}]],
+			daysShort: [[${daysShort}]],
+			daysMin: [[${daysMin}]],
+			months: [[${months}]],
+			monthsShort: [[${monthsShort}]],
+			today: [[${languageFieldsList.getTranslation('Today')}]],
+			clear: [[${languageFieldsList.getTranslation('Clear')}]],
+			format: "mm/dd/yyyy",
+			titleFormat: "MM yyyy"
+		};
+	</script>
+	<script th:src="@{../js/ui.min.js(v=${jsCssQueryString})}"></script>
+	<script src="../js/block-ui.js"></script>
+	<script th:src="@{../js/util.js}"></script>
+	<script th:src="@{../js/footer.js}"></script>
+</div>

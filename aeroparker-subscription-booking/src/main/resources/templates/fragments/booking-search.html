@@ -1,0 +1,32 @@
+<div th:fragment="booking-search">
+	<section class="account__top-bar">
+		<header class="container">
+			<p class="title" th:text="${languageFieldsList.getTranslation('Please enter your booking reference and the e-mail address you entered when you booked.')}">Please enter your booking reference and the e-mail address you entered when you booked.</p>
+		</header>
+	</section>
+	<section class="account text-center">
+		<div class="container">
+			<form action="view-booking" method="post" id="BookingForm" class="login-form login-form-manage-booking">
+				<input type="hidden" name="loginSubmitted" value="1" />
+				<article class="alert alert-danger text-center" th:if="${!#strings.isEmpty(errorMessage)}">
+					<p th:text="${languageFieldsList.getTranslation(errorMessage)}"></p>
+				</article>
+				<div class="row">
+					<label for="reference" class="manage-booking-label" th:text="${languageFieldsList.getTranslation('Reference')} + '*'"></label>
+					<input type="text" class="input-text" name="reference" th:value="${reference ?: ''}" />
+				</div>
+				<div class="row">
+					<label for="emailAddress" class="manage-booking-label" th:text="${languageFieldsList.getTranslation('E-Mail Address')} + '*'"></label>
+					<input type="text" class="input-text" name="email" />
+				</div>
+				<div class="place-button">
+					<div class="row">
+						<button type="submit" class="btn btn-primary" th:text="${languageFieldsList.getTranslation('Continue')}">
+							<i class="icon icon--btn-forward"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+</div>

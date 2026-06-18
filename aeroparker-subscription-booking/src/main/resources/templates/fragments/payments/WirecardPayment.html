@@ -1,0 +1,13 @@
+<div th:fragment="WirecardPayment" th:remove="tag">
+	<style th:replace="fragments/payments/wirecard-style :: wirecard-style"></style>
+	<script th:inline="javascript">
+		var seamlessLocale = [[${seamlessLocale}]];
+	</script>
+	<!-- Page content HTML -->
+	<div class="form__content">
+		<input type="hidden" name="userChosenPayment" id="userChosenPayment">
+		<div th:include="fragments/payments/wirecard-new-details :: wirecard-new-details"></div>
+	</div>
+	<script th:src="${paymentJsLocation}" type="text/javascript"></script>
+	<script th:src="@{../js/payments/wirecard.js}" type="text/javascript"></script>
+</div>

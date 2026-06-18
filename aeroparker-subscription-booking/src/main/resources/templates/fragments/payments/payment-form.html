@@ -1,0 +1,11 @@
+<div class="form__section" id="payment-details-form-section"  th:fragment="payment-form" th:if="${not (noPaymentRequired ?: false)}">
+	<div class="form__heading" id="payment-details-form-heading">
+		<h2 th:text="${languageFieldsList.getTranslation('Payment Details')}">Payment Details</h2>
+	</div>				
+	<div class="form__content" id="payment-details-form-content">
+		<input type="hidden" name="paymentReference" id="paymentReference">	
+		<div id="payment-options">
+			 <div th:replace="'fragments/payments/' + ${paymentHtml} ::  ${paymentHtml}"></div>
+		</div>
+	</div>
+</div>

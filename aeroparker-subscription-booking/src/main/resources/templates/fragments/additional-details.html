@@ -1,0 +1,34 @@
+<div class="form__section form__section"
+	th:if="${config.showAdditionalDetails()}"
+	th:fragment="additional-details">
+	<div class="form__heading">
+		<h2
+			th:text="${languageFieldsList.getTranslation('Additional Details')}">Vehicle
+			Details</h2>
+	</div>
+	<div class="form__content">
+		<div class="form__row"
+			th:if="${#lists.contains(paymentStepFields, paymentStepFieldsList.REFERRED_BY_FRIEND.id) && !#lists.contains(mandatoryFields, paymentStepFieldsList.REFERRED_BY_FRIEND.id)}">
+			<div class="form-group form-group--vm">
+				<label> <input type="checkbox" id="referredByFriendCheckbox"
+					name="referredByFriendCheckbox" /> <span
+					th:text="${languageFieldsList.getTranslation('Referred By A Friend?')}">
+						Referred By A Friend? </span>
+				</label>
+			</div>
+		</div>
+		<div id="referrerMembershipIdDiv"
+			th:style="${#lists.contains(mandatoryFields, paymentStepFieldsList.REFERRED_BY_FRIEND.id)} ? 'display:block;' : 'display:none;'"
+			class="form__row">
+			<div class="form-group form-group--vm">
+				<label for="referrerMembershipId"
+					th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.REFERRED_BY_FRIEND.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.REFERRED_BY_FRIEND.id) ? '*' : '')}">Car
+					Colour</label> <input type="text" id="referrerMembershipId" name="referrerMembershipId"
+					class="form-control form-control--ib" th:value="*{referrerMembershipId}"
+					data-parsley-trigger="keyup focusout submit"
+					th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter the membership number of the person who referred you') + '.'}"
+					th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.REFERRED_BY_FRIEND.id)}" />
+			</div>
+		</div>
+	</div>
+</div>

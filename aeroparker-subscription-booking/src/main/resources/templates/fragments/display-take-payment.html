@@ -1,0 +1,33 @@
+<div class="display-take-payment" th:fragment="display-take-payment">
+	<div class="container">
+		<div class="form__heading">
+			<h2 th:text="${languageFieldsList.getTranslation('Subscription Details')}">Subscription Details</h2>
+		</div>
+		<form id="PaymentForm" class="form form--details cf" th:action="@{display-renewal-payment}" method="POST">
+			<input type="hidden" name="email" id="email" th:value="${session.email}">
+			<input type="hidden" name="reference" id="reference" th:value="${session.reference}">
+
+			<div class="form__content">
+				<dl style="padding-left: 10px;">
+					<dt style="padding-top: 20px;" class="text-primary top-padding" th:text="${languageFieldsList.getTranslation('Product Name')}">Product Name</dt>
+					<dd th:text="${languageFieldsList.getTranslation(productName)}"></dd>
+	
+					<dt style="padding-top: 15px;" class="text-primary top-padding" th:text="${languageFieldsList.getTranslation('Start Date')}">Start Date</dt>
+					<dd th:text="${localise.longDateTranslated(startDate, languageFieldsList)}"></dd>
+	
+					<dt style="padding-top: 15px;" class="text-primary top-padding" th:text="${languageFieldsList.getTranslation('End Date')}">End Date</dt>
+					<dd th:text="${localise.longDateTranslated(endDate, languageFieldsList)}"></dd>
+	
+					<dt style="padding-top: 15px;" class="text-primary top-padding" th:text="${languageFieldsList.getTranslation(productName)}"/>
+					<dd th:utext="${localise.price(price.floatValue())}"></dd>
+				</dl>
+			</div>
+			<div class="form__section">
+				<button type="submit" class="btn btn-primary btn--submit form__submit" style="margin-bottom: 14px;"
+					th:text="${languageFieldsList.getTranslation('Continue')}">
+					<i class="icon icon--btn-forward"></i>
+				</button>
+			</div>
+		</form>
+	</div>
+</div>

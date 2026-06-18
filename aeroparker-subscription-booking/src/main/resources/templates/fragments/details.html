@@ -1,0 +1,18 @@
+<div class="details" th:fragment="details">
+	<div class="container">
+		<div class="row" th:with="mandatoryFields=${config.mandatoryFields}, paymentStepFields=${config.paymentStepFields}, titleFields=${config.titleFields}">
+			<th:block
+				th:if="${bodyAnalytics != null and !#strings.isEmpty(bodyAnalytics)}"
+				th:utext="${bodyAnalytics}">
+			</th:block>
+			<p class="form__mandatory-field" th:text="${'(*)' + languageFieldsList.getTranslation('Mandatory field')}">(*) Mandatory field</p>
+			<div class="col-sm-8">
+				<div th:replace="fragments/alert :: alert"></div>
+				<form th:replace="fragments/form-details :: form-details"></form>
+			</div>
+			<div class="col-sm-4">
+				  <aside th:replace="fragments/details-side-bar :: details-side-bar"></aside>
+			</div>
+		</div>
+	</div>
+</div>

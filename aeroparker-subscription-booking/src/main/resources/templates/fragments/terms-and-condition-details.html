@@ -1,0 +1,62 @@
+<div th:fragment="terms-and-condition-details" th:remove="tag">
+	<div class="form__section">
+		<div class="form__content">
+			<div class="form__row">
+				<div class="form-group form-group--vt">
+                    <div class="form-group" th:if="${not #strings.isEmpty(rightToCancel)}">
+                        <div class="check-group" style="margin-bottom: 5px;">
+                            <input type="checkbox" id="rightToCancel"
+                                   name="rightToCancel"
+                                   th:data-parsley-required-message="${languageFieldsList.getTranslation('You must accept the Right to Cancel Agreement to continue.')}"
+                                   data-parsley-trigger="submit"
+                                   required="required"/>
+                            <label for="rightToCancel" th:utext="${rightToCancel}"></label>
+                        </div>
+                    </div>
+					<div th:if="${showTermsAndConditions and not #strings.isEmpty(termsAndConditions)}">
+						<div class="form-group">
+							<div class="check-group" th:if="${useTermsUrl}">
+								<input type="checkbox" style="margin-bottom: 5px;" id="terms" name="tc" value="yes" 
+									th:data-parsley-required-message="${languageFieldsList.getTranslation('You must accept the Terms and Conditions to continue.')}"
+									data-parsley-trigger="submit"
+									required="required"
+									data-step4-tandc-box>
+								<label for="terms" th:with="termsUrl=${'<a href=' + termsAndConditions + ' ' +  'target=&#34;_blank&#34;>' + languageFieldsList.getTranslation('Terms and Conditions') + '</a>'}"  th:utext="${languageFieldsList.getTranslation('I have read and accept the {strReplace}', termsUrl)}"></label>
+							</div>
+							<div class="check-group" style="margin-bottom: 5px;" th:unless="${useTermsUrl}">
+								<input type="checkbox" id="terms" name="tc" value="yes"
+									th:data-parsley-required-message="${languageFieldsList.getTranslation('You must accept the Terms and Conditions to continue.')}"
+									data-parsley-trigger="submit"
+									required="required"
+									data-step4-tandc-box>
+								<label for="terms" th:utext="${termsAndConditions}"></label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" th:if="${not #strings.isEmpty(personalData)}">
+						<div class="check-group" style="margin-bottom: 5px;">
+							<input type="checkbox" id="personalData"
+								name="personalData"
+								th:data-parsley-required-message="${languageFieldsList.getTranslation('You must accept the Privacy Policy to continue.')}"
+								data-parsley-trigger="submit"
+								required="required"/>
+							<label for="personalData" th:utext=${personalData}></label>
+						</div>
+					</div>
+					<div th:if="${not #strings.containsIgnoreCase(requestBean.site.title, 'dortmund')}">
+						<div th:replace="fragments/crm-opt-ins :: crm-opt-ins"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form__section" th:unless="${not #strings.containsIgnoreCase(requestBean.site.title, 'dortmund')}">
+		<div class="form__content">
+			<div class="form__row">
+				<div class="form-group form-group--vt">
+					<div th:replace="fragments/crm-opt-ins :: crm-opt-ins"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

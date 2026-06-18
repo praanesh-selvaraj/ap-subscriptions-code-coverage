@@ -1,0 +1,28 @@
+<div th:fragment="BraintreePayment" th:remove="tag">
+	<style>
+	.paymentTypeSelectRow{
+		margin-left: 10px;
+	}
+	.payPalRadio{
+	  float: left;
+	}
+	</style>	
+	
+	<div class="form__row" id="payment-method-selector">
+		<input type="hidden" name="environment" id="environment" th:value=${environment}>
+		<input type="hidden" name="cvvCheckEnabled" id="cvvCheckEnabled" th:value=${cvvCheckEnabled}>
+		<input type="hidden" name="clientToken" id="clientToken" th:value=${clientToken}>		
+		<input type="hidden" name="is3DS2Enabled" id="is3DS2Enabled" th:value=${is3DS2Enabled}>
+		<div th:replace="fragments/payments/braintree-card-form :: braintree-card-form"></div>
+		<th:block th:if="${is3DS2Enabled}">
+			<script src="https://js.braintreegateway.com/web/3.68.0/js/client.min.js"></script>
+			<script src="https://js.braintreegateway.com/web/3.68.0/js/hosted-fields.min.js"></script>
+			<script src="https://js.braintreegateway.com/web/3.68.0/js/three-d-secure.js"></script>
+		</th:block>
+		<th:block th:unless="${is3DS2Enabled}">
+			<script src="https://js.braintreegateway.com/web/3.15.0/js/client.min.js"></script>
+			<script src="https://js.braintreegateway.com/web/3.15.0/js/hosted-fields.min.js"></script>
+		</th:block>
+		<script th:src="@{../js/payments/braintree-payment.js}"></script>
+	</div>
+</div>

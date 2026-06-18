@@ -1,0 +1,43 @@
+<div class="container"  th:fragment="select-multiple-products">
+	<div class="row">
+		<div class="col-sm-8 col-md-9">
+			<div class="row">
+				<div class="col-sm-6 col-md-4" th:each="productDisplayItem : ${productDisplayItemList}">
+					<!-- productNumber is used for the info dropdown boxes so they match up and expand the correct one -->
+					<article class="product product--subscription   cf"  th:with="product= ${productDisplayItem.product}, productAppearance=${productDisplayItem.productAppearance}, priceDetails=${productDisplayItem.priceDetails}">
+						<div class="product__wrap  cf">
+									
+							<div class="product__img-inline" th:if="${#strings.length(productAppearance.imagePath) > 0}">
+								<img th:src="@{${requestBean.uploadUrl + productAppearance.imagePath}}" alt="">
+							</div>
+							<div class="product__main">
+								<div class="product__title"  th:style="(${#strings.length(productAppearance.imagePath) > 0} ? '' : 'background-color:' +  ${productAppearance.colour})" data-product-match-height-1 >
+									<div class="product__inner">
+										<h2 th:text="${productAppearance.displayName}">Standalone</h2>
+									</div>
+								</div>
+								<div th:if="${productDisplayItem.isSeasonTicket()}" th:remove="tag">
+									<div th:replace="fragments/season-select-products :: season-select-products" ></div>
+								</div>
+								<div th:if="${productDisplayItem.isRecurringTicket()}" th:remove="tag">
+									<div th:replace="fragments/recurring-select-products :: recurring-select-products" ></div>									
+								</div>
+							</div>
+						</div>
+						<div class="product__expander"  th:attr="data-moreinfo-expander=${'moreInfo-' + product.id}">
+							<div class="product__inner">
+								<p th:utext="${productDisplayItem.unescapedMoreInfo}">Lorem consectetur adipisicing elit. Asperiores quam, obcaecati natus dolorum ipsam necessitatibus quisquam. Nulla voluptas a perferendis delectus nihil unde natus, odit ipsum nemo labore veniam, enim?</p>
+							</div>
+						</div>
+					</article>
+				</div>
+				<form id="selectedProductForm" class="form" method="POST" style="display: none">
+					<input type="hidden" name="selectedProductData" id="selectedProductData">
+				</form>
+			</div>
+		</div>		
+		<div class="col-sm-4 col-md-3">
+			<div id="details-side-bar" th:insert="fragments/details-side-bar :: details-side-bar"></div>
+		</div>
+	</div>
+</div>

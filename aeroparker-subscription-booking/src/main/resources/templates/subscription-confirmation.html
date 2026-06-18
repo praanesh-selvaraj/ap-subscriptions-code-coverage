@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="en">
+<head th:replace="fragments/header :: header-css (styleSheetUrl= ${requestBean.affiliatesDisplay?.styleSheetUrl}, affiliateMetadata=${requestBean.affiliatesMetadata}, favIconPath=${requestBean.affiliatesDisplay?.faviconUrl})" >
+</head>
+<body>
+	<div class="wrapper wrapper--multipurchase" th:with="affiliateDisplay= ${requestBean.affiliatesDisplay}, affSubDisplay=${requestBean.affiliateSubscription},
+		 affSubDisplayMedia=${requestBean.affiliateSubscriptionMedia}, affSubSettings=${requestBean.affiliateSubscriptionSettings}">
+		<div th:replace="fragments/header-main :: header-main" ></div>
+		<th:block
+			th:if="${upperHeadAnalytics != null and !#strings.isEmpty(upperHeadAnalytics)}"
+			th:utext="${upperHeadAnalytics}"></th:block>
+
+		<th:block
+			th:if="${lowerHeadAnalytics != null and !#strings.isEmpty(lowerHeadAnalytics)}"
+			th:utext="${lowerHeadAnalytics}"></th:block>
+		<main class="bg-1" role="main">
+			<div th:if="${affSubSettings?.displayBanner ?: true}">
+				<div th:replace="fragments/breadcrumb-step2 :: breadcrumb-step2" ></div>
+			</div>
+			<div th:replace="fragments/confirmation-main :: confirmation-main" ></div>
+			<th:block
+				th:if="${footerAnalytics != null and !#strings.isEmpty(footerAnalytics)}"
+				th:utext="${footerAnalytics}"></th:block>
+			<footer th:replace="fragments/footer :: footer" ></footer>
+		</main>
+	</div>
+	<div th:replace="fragments/body-scripts :: body-scripts"></div>
+</body>
+</html>

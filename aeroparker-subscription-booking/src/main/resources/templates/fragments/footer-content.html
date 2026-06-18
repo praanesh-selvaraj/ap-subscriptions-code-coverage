@@ -1,0 +1,10 @@
+<div class="col-sm-6 col-md-6 col-lg-6 text-center hidden-xs navbar-left"
+	th:fragment="footer-content-title">
+	<h1 class="hidden-sm" th:text="${contentTitle}"></h1>
+</div>
+
+<main role="main" class="bg-1" th:fragment="footer-content-body">
+	<div class="contact-details">
+		<div class="container container--thin container--white-bg" th:utext="${contentData}"></div>
+	</div>
+</main>

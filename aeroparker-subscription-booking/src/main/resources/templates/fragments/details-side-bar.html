@@ -1,0 +1,84 @@
+<aside class="booking-summary" th:fragment="details-side-bar"
+	th:object="${basket}">
+	<div class="booking-summary__title">
+		<h3 th:text="${languageFieldsList.getTranslation('Booking Summary')}">Booking Summary</h3>
+	</div>
+	<div class="booking-summary__content" id="sideBasketTable">
+		 <div th:each="purchaseRequest : *{purchaseRequestList}" th:remove="tag">
+			<div class="booking-summary__item">
+				<div class="booking-summary__item__title" th:text="${languageFieldsList.getTranslation('Product Name')}">Product Name</div>
+				<div class="booking-summary__item__val">
+					<span id="name" th:text="${purchaseRequest.displayName}">Subscription</span>
+				</div>
+			</div>
+			<div class="booking-summary__item">
+				<div class="booking-summary__item__title" th:text="${languageFieldsList.getTranslation('Start Date')}">Start Date</div>
+				<div class="booking-summary__item__val">
+					<span id="cpEntryDate" th:text="${purchaseRequest.localisedStartDate}">22nd
+						March</span>
+				</div>
+			</div>
+
+			<div th:if="${purchaseRequest.isSeasonTicket()}" class="booking-summary__item">
+				<div class="booking-summary__item__title" th:text="${languageFieldsList.getTranslation('End Date')}">End Date</div>
+				<div class="booking-summary__item__val">
+					<span id="cpExitDate" th:text="${purchaseRequest.localisedEndDate}">22nd
+						March</span>
+				</div>
+			</div>
+
+			<div class="booking-summary__item">
+				<div class="booking-summary__item__title"
+					th:text="${purchaseRequest.displayName + ' ' + languageFieldsList.getTranslation('Price')}"></div>
+				<div class="booking-summary__item__val">
+					 <span th:utext="${localise.price(purchaseRequest.originalProductPrice) + (purchaseRequest.isRecurringTicket() ? '/' + languageFieldsList.getTranslation('mo') : '')}"></span>
+				</div>
+			</div>
+			
+			<div th:if="${!purchaseRequest.product.getHideCarPark()}" class="booking-summary__item">
+				<div class="booking-summary__item__title" th:text="${languageFieldsList.getTranslation('Car Park')}">Car Park</div>
+				<div class="booking-summary__item__val">
+					<span th:each="carPark : ${purchaseRequest.subscriptionCarparks}">
+						<dt></dt>
+						<dd th:utext="${carPark.name}"></dd>
+					</span>
+					<span th:if="${purchaseRequest.subscriptionCarparks.isEmpty()}" th:utext="${purchaseRequest.carPark.name}">Subscription</span>
+				</div>
+			</div>
+		</div>
+		<div class="booking-summary__item" th:if="*{totalBookingFee &gt; 0}">
+				<div class="booking-summary__item__title"
+					th:text="${languageFieldsList.getTranslation('Booking Fee')}"></div>
+				<div class="booking-summary__item__val">
+					<span th:with="bookingFee=*{totalBookingFee}" th:utext="${localise.price(bookingFee)}"></span>
+				</div>
+		</div>
+		<div class="booking-summary__item" id="promoDiscountItem" style="display: none;">
+			<div class="booking-summary__item__title"
+				th:text="${languageFieldsList.getTranslation('Promo Discount')}">Promo Discount</div>
+			<div class="booking-summary__item__val">
+				<span id="promoDiscountAmount">-€0.00</span>
+			</div>
+		</div>
+		<div class="booking-summary__item">
+			<div class="booking-summary__item__title" th:text="${languageFieldsList.getTranslation('Total')}">Total</div>
+			<div class="booking-summary__item__val booking-summary__item__val--total"
+				id="summaryTotal"
+				th:attr="data-original-total=${basket.originalPriceIncludePennyPlaceholdersHtml}"
+				th:utext="${basket.priceIncludePennyPlaceholdersHtml}">
+			</div>
+		</div>
+		<div class="booking-summary__item" id="discountedTotalItem" style="display: none;">
+			<div class="booking-summary__item__title"
+				th:text="${languageFieldsList.getTranslation('Discounted Total')}">Discounted Total</div>
+			<div class="booking-summary__item__val booking-summary__item__val--total">
+				<span id="discountedTotal">€0.00</span>
+			</div>
+		</div>
+	</div>
+	<div class="booking-summary__footer">
+	<button type="submit" class="btn btn-primary btn--submit" th:if="${continueToNextStep}"
+		th:onclick="'javascript:sendSelectedProductForm()'" th:text="${languageFieldsList.getTranslation('Continue')}">			<i class="icon icon--btn-forward"></i>
+		</button>
+	</div>
+</aside>

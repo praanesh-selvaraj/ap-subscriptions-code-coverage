@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css (styleSheetUrl= ${requestBean.affiliatesDisplay.styleSheetUrl}, affiliateMetadata=${requestBean.affiliatesMetadata}, favIconPath=${requestBean.affiliatesDisplay?.faviconUrl})" />
+<body>
+	<script th:src="@{../js/bower.min.js(v=${jsCssQueryString})}"></script>
+	<div class="wrapper wrapper--multipurchase" th:with="affiliateDisplay= ${requestBean.affiliatesDisplay}, affSubDisplay=${requestBean.affiliateSubscription},
+				 affSubDisplayMedia=${requestBean.affiliateSubscriptionMedia}, affSubSettings=${requestBean.affiliateSubscriptionSettings}">
+		<header th:replace="fragments/header-main :: header-main"></header>
+		<th:block
+			th:if="${upperHeadAnalytics != null and !#strings.isEmpty(upperHeadAnalytics)}"
+			th:utext="${upperHeadAnalytics}">
+		</th:block>
+
+		<th:block
+			th:if="${lowerHeadAnalytics != null and !#strings.isEmpty(lowerHeadAnalytics)}"
+			th:utext="${lowerHeadAnalytics}">
+		</th:block>
+		<main role="main" class="bg-1 main__standalone">
+			<div th:if="${affSubSettings?.displayBanner ?: true}">
+				<div th:replace="fragments/breadcrumb :: breadcrumb"></div>
+			</div>
+			<div th:if="${affSubSettings?.displayHomeAndBackButtons ?: true}">
+				<div th:replace="fragments/back-btn :: back-btn (backUrl=${'products?startDate=' + startDate + (isMultiPurchase ? '&customerGuid=' + customerGuid : '')})"></div>
+			</div>
+			<div class="form-error-message" th:if="${emailError}">
+				<p th:text="${emailError}"></p>
+			</div>
+			<div th:replace="fragments/details :: details"></div>
+			<th:block
+				th:if="${footerAnalytics != null and !#strings.isEmpty(footerAnalytics)}"
+				th:utext="${footerAnalytics}">
+			</th:block>
+			<footer th:replace="fragments/footer :: footer"></footer>
+		</main>
+	</div>
+	<script th:src="@{../js/ui.min.js(v=${jsCssQueryString})}"></script>
+	<script src="../js/block-ui.js"></script>
+	<script th:src="@{../js/util.js}"></script>
+	<script th:src="@{../js/details.js}"></script>
+	<script th:src="@{../js/footer.js}"></script>
+	<script th:src="@{../js/subscription-booking.js}"></script>
+	<script th:src="@{../js/vehicle-lookup.js}"></script>
+	<script th:src="@{../js/promo-code.js(v=${jsCssQueryString})}"></script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var companyVatRegistrationNumberParsley = $("#companyVatRegistrationNumber").parsley();
+			var companyVatRegistrationNumber = $("#companyVatRegistrationNumber");
+			var viesVatValidationErrMessage = '${viesVatValidationErrMessage}';
+			if (viesVatValidationErrMessage && viesVatValidationErrMessage !== '${viesVatValidationErrMessage}') {
+				window.ParsleyUI.removeError(companyVatRegistrationNumberParsley, 'invalid-vat-error');
+				window.ParsleyUI.addError(companyVatRegistrationNumberParsley, 'invalid-vat-error', viesVatValidationErrMessage);
+			}
+	
+			companyVatRegistrationNumber.focusout(function() {
+				window.ParsleyUI.removeError(companyVatRegistrationNumberParsley, 'invalid-vat-error');
+				var useViesVatValidation = [[${useViesVatValidation}]];
+				var affiliateId = parseInt([[${affiliateId}]], 10);
+				if (useViesVatValidation === true && companyVatRegistrationNumber.val()) {
+					$.ajax({
+						type: "POST",
+						dataType: "json",
+						url: "VatValidatorAjax",
+						data: {
+							cmd: "validateCompanyRegNumberVies",
+							vatNumber: companyVatRegistrationNumber.val(),
+							affiliateId: affiliateId 
+						},
+					}).done(function(data) {
+						companyVatRegistrationNumberParsley.reset();
+						if (!data.isValid) {
+							window.ParsleyUI.addError(companyVatRegistrationNumberParsley, 'invalid-vat-error', data.invalidCompanyVatErrMessage);
+						}
+					})
+				}
+			})
+		});
+	</script>
+</body>
+</html>

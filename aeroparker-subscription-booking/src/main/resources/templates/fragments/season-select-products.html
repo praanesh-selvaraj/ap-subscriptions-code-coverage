@@ -1,0 +1,37 @@
+ <div class="product__content" th:fragment="season-select-products">
+	<div class="product__inner" data-product-match-height-2>
+		<ul>
+			<li th:each="bulletPoint : ${productDisplayItem.bulletPoints}" th:text="${bulletPoint}"></li>
+		</ul>
+           		<button type="button" th:if="${#strings.length(productAppearance.moreInfo) > 0}" class="btn btn-default" th:attr="data-moreinfo-trigger=${'moreInfo-' + product.id}" 
+           		th:text="${languageFieldsList.getTranslation('More info')}">More info</button>
+	</div>					
+	<!--  div class="product__info" data-product-match-height-3>
+		<div class="product__inner">
+			<div class="product__quantity">
+				<label for="">Quantity</label>
+				<div class="custom-select-wrap">
+					<select class="custom-select">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div -->
+	<div class="product__price">
+		<div class='price' th:utext="${priceDetails.priceIncludePennyPlaceholdersHtml}"></div>
+	</div>
+	<div class="product__inner product__btns" th:if="${isMultiPurchase}">
+		<button type="button" th:style="'display:'+${productDisplayItem.selected ? 'none' : '' }" th:attr="data-subscription-addTobasket-button=${product.id}" class="btn btn-primary subscribe-btn" th:text="${languageFieldsList.getTranslation('Subscribe')}">Subscribe</button>	
+		<div class="btn btn-added" th:style="'display:'+${productDisplayItem.selected ? '' : 'none' }" th:attr="data-subscription-removefrombasket-button=${product.id}, data-subscription-product-selected=${productDisplayItem.selected}" th:inline="text">
+			[[${languageFieldsList.getTranslation('Added')}]]<span th:attr="data-subscription-removefrombasket=${product.id}" th:text="${languageFieldsList.getTranslation('Remove')}">Remove</span>
+		</div>
+		<span th:text="${languageFieldsList.getTranslation('Valid until') +' '+ productDisplayItem.endDateLocalised}">Valid until 1 Jan 2019</span>
+	</div>
+	<div class="product__inner product__btns" th:unless="${isMultiPurchase}">
+		<button type="button" class="btn btn-primary subscribe-btn" th:attr="data-subscription-addTobasket-button=${product.id}" th:text="${languageFieldsList.getTranslation('Subscribe')}">Subscribe</button>
+		<span th:text="${languageFieldsList.getTranslation('Valid until') +' '+ productDisplayItem.endDateLocalised}">Valid until 1 Jan 2019</span>
+	</div>
+</div>

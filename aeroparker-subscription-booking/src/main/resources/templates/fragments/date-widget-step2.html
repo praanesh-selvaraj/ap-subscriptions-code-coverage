@@ -1,0 +1,28 @@
+<div class="ui-bar ui-bar--top cf" th:fragment="date-widget-step2">
+	<div class="container">	
+		<div class="w-change-date w-change-date--alt"
+			th:attr="data-date-input-format=${dateInputFormat},
+			data-date-display-format=${dateDisplayFormat}, 
+			data-start-date=${datePickerStartDate},
+			data-end-date=${datePickerStartDate},
+			data-entry-date=${datePickerEntryDate},
+			data-fixed-start-day=${datePickerfixedStartDay}" 
+			data-date-today-highlight="true"
+		    data-date-autoclose="true"
+		    data-start-time="08:00" 
+		    data-disable-auto-select-exit="false"
+			data-datepicker-type="widget-subscriptions">
+			<form id="changeDate" class="form" th:action="@{dates}" method="POST">
+				<div class="w-change-date__col">
+					<label for="changeEntryDate" th:inline="text"> [[${languageFieldsList.getTranslation('Start date')}]] <i class="fa fa-angle-down"></i></label>
+					<div id="editEntryDate" class="w-change-date__input input-group date">
+						<input type="text" id="changeEntryDate" name="startDate" class="form-control" readonly="readonly">
+					</div>
+				</div>
+				<div class="w-change-date__col">
+					<input type="submit" class="btn btn-primary w-change-date__action" th:value="${languageFieldsList.getTranslation('Apply')}">
+				</div>	
+			</form>
+		</div>
+	</div>
+</div>

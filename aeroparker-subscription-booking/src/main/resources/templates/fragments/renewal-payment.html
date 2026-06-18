@@ -1,0 +1,26 @@
+<div class="renewal-payment" th:fragment="renewal-payment">
+	<div class="container">
+		<th:block
+			th:if="${bodyAnalytics != null and !#strings.isEmpty(bodyAnalytics)}"
+			th:utext="${bodyAnalytics}">
+		</th:block>
+		<form id="PaymentForm" class="form form--details cf" th:action="@{take-renewal}" th:object="${bookingData}" method="POST" >
+			<input type="hidden" name="currency" id="currency" th:value="${currency}">
+			<input type="hidden" name="languageCode" id="languageCode" th:value="${languageCode}">
+			<input type="hidden" name="affiliateName" id="affiliateName" th:value="${affiliateName}">
+			<input type="hidden" name="amount" id="amount" th:value="${amount}">
+			<input type="hidden" name="paymentGatewayType" id="paymentGatewayType" th:value="${paymentGatewayType}">
+			<input type="hidden" name="affiliateId" id="affiliateId" th:value="${affiliateId}">
+			<input type="hidden" name="customerGuid" id="customerGuid" value="">
+			<input type="hidden" name="startDate" id="startDate" value="">
+		
+			<div th:replace="fragments/payments/payment-form :: payment-form"></div>
+			<div th:replace="fragments/terms-and-condition-details :: terms-and-condition-details"></div>
+		
+			<button type="submit" class="btn btn-primary btn--submit form__submit" id="PaymentFormSubmit" style="min-width: 160px; margin-bottom: 20px" th:inline="text"> 
+				[[${languageFieldsList.getTranslation('Book and Pay')}]]
+				<i class="icon icon--btn-forward"></i>
+			</button>
+		</form>
+	</div>
+</div>

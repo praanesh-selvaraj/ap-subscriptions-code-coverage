@@ -1,0 +1,12 @@
+<div th:fragment="company-details" th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.COMPANY.id)}" th:remove="tag">
+	<div class="form__row">
+		<div class="form-group">
+			<label for="company"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.COMPANY.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.COMPANY.id) ? '*' : '')}">Company</label>
+			<input type="text" id="company" name="company" class="form-control"
+				th:value="*{company}" data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your company name') + '.'}"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.COMPANY.id)}" />
+		</div>
+	</div>
+</div>

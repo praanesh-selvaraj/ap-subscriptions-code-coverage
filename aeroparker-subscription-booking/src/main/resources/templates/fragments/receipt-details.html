@@ -1,0 +1,127 @@
+<div th:fragment="receipt-details" th:remove="tag">
+	<div class="form__row" style="padding-top: 20px;">
+		<div class="form-group"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.TAX_IDENTIFICATION_NUMBER.id)}">
+			<label for="taxIdentificationNumber"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.TAX_IDENTIFICATION_NUMBER.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.TAX_IDENTIFICATION_NUMBER.id) ? '*' : '')}">Tax
+				Identification Number</label> <input type="text"
+				id="taxIdentificationNumber" name="taxIdentificationNumber"
+				class="form-control" th:value="*{taxIdentificationNumber}"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter tax identification number')+ '.' }"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.TAX_IDENTIFICATION_NUMBER.id)}"/>
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="form-group"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.ADDRESS1_RECEIPT.id)}">
+			<label for="address1Receipt"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.ADDRESS1_RECEIPT.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.ADDRESS1_RECEIPT.id) ? '*' : '')}">
+				Address 1 Receipt</label> <input type="text" id="address1Receipt"
+				name="address1Receipt" class="form-control"
+				th:value="*{address1Receipt}"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter address 1 receipt')+ '.' }"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.ADDRESS1_RECEIPT.id)}" />
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="form-group"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.ADDRESS2_RECEIPT.id)}">
+			<label for="address2Receipt"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.ADDRESS2_RECEIPT.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.ADDRESS2_RECEIPT.id) ? '*' : '')}">
+				Address 2 Receipt</label> <input type="text" id="address2Receipt"
+				name="address2Receipt" class="form-control"
+				th:value="*{address2Receipt}"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter address 2 receipt')+ '.' }"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.ADDRESS2_RECEIPT.id)}" />
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="form-group"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.POSTCODE_RECEIPT.id)}">
+			<label for="postcodeReceipt"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.POSTCODE_RECEIPT.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.POSTCODE_RECEIPT.id) ? '*' : '')}">
+				Postcode Receipt</label> <input type="text" id="postcodeReceipt"
+				name="postcodeReceipt" class="form-control"
+				th:value="*{postcodeReceipt}"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter postcode receipt')+ '.' }"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.POSTCODE_RECEIPT.id)}" />
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="form-group"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.TOWN_RECEIPT.id)}">
+			<label for="townReceipt"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.TOWN_RECEIPT.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.TOWN_RECEIPT.id) ? '*' : '')}">
+				Town Receipt</label> <input type="text" id="townReceipt" name="townReceipt"
+				class="form-control" th:value="*{townReceipt}"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter town receipt')+ '.' }"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.TOWN_RECEIPT.id)}" />
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="form-group"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.COUNTY_RECEIPT.id)}">
+			<label for="countyReceipt"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.COUNTY_RECEIPT.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.COUNTY_RECEIPT.id) ? '*' : '')}">
+				County Receipt</label> <input type="text" id="countyReceipt"
+				name="countyReceipt" class="form-control"
+				th:value="*{countyReceipt}"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter county receipt')+ '.' }"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.COUNTY_RECEIPT.id)}" />
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="form-group"
+			th:if="${#lists.contains(paymentStepFields, paymentStepFieldsList.COUNTRY_RECEIPT.id) && !#lists.contains(paymentStepFields, paymentStepFieldsList.COUNTRY_CODES.id)}">
+			<label for="countryReceipt"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.COUNTRY_RECEIPT.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.COUNTRY_RECEIPT.id) ? '*' : '')}">
+				Country Receipt</label> <input type="text" id="countryReceipt"
+				name="countryReceipt" class="form-control"
+				th:value="*{countryReceipt}"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter country receipt')+ '.' }"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.COUNTRY_RECEIPT.id)}" />
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="form-group"
+			th:if="${#lists.contains(paymentStepFields, paymentStepFieldsList.COUNTRY_RECEIPT.id) && #lists.contains(paymentStepFields, paymentStepFieldsList.COUNTRY_CODES.id)}">
+			<label for="countryReceipt"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.COUNTRY_RECEIPT.label) +' '+ (#lists.contains(mandatoryFields, paymentStepFieldsList.COUNTRY_RECEIPT.id) ? '*' : '')}">
+				Country Receipt</label>
+			<select id="countryReceipt" name="countryReceipt" class="form-control"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please select a country receipt') + '.'}"
+				th:with="isMandatory=${#lists.contains(mandatoryFields, paymentStepFieldsList.COUNTRY_RECEIPT.id)}"
+				th:required="${isMandatory}">
+				<option th:if="${!isMandatory}" value="">--</option>
+				<option th:each="country : ${countries}" th:value="${country.value}" th:data-country-code="${country.key}"
+					th:text="${languageFieldsList.getTranslation(country.value)}"
+					th:with="countryReceiptSel=*{countryReceipt}, translatedCountryName=${languageFieldsList.getTranslation(locationName)}"
+					th:selected="${(isMandatory and #strings.equals(country.value, translatedCountryName)) or #strings.equals(country.value, countryReceiptSel)}">
+				</option>
+			</select>
+			<input type="hidden" id="countryCodeReceipt" name="countryCodeReceipt" />
+		</div>
+	</div>
+	<div class="form__row">
+		<div class="form-group"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.COMPANY_VAT_REGISTRATION_NUMBER.id)}">
+			<label for="companyVatRegistrationNumber"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.COMPANY_VAT_REGISTRATION_NUMBER.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.COMPANY_VAT_REGISTRATION_NUMBER.id) ? '*' : '')}">
+				Company VAT Registration Number</label> <input type="text"
+				id="companyVatRegistrationNumber"
+				name="companyVatRegistrationNumber" class="form-control"
+				th:value="*{companyVatRegistrationNumber}"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter company VAT registration number')+ '.' }"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.COMPANY_VAT_REGISTRATION_NUMBER.id)}" />
+		</div>
+	</div>
+</div>

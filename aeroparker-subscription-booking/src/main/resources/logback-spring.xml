@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<logger name="org.apache.http" level="debug" />
+	<!-- LOCAL -->
+	<springProfile name="local">
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<Pattern>
+					%d{ISO8601} %-5level --- [%t] %logger{36} : %msg%n
+				</Pattern>
+			</layout>
+		</appender>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</springProfile>
+	<!-- DEV US EAST -->
+	<springProfile name="dev-us-east">
+		<appender name="errMailer"
+			class="ch.qos.logback.classic.net.SMTPAppender">
+			<smtpHost>email-smtp.eu-west-1.amazonaws.com</smtpHost>
+			<smtpPort>587</smtpPort>
+			<STARTTLS>true</STARTTLS>
+			<username>AKIAJ5P2N5STXJCEP35Q</username>
+			<password>AnqYpzRkfgI+LYCod/unIE618kxE9YlyilkNrq+t154y</password>
+			<from>subscriptionsalert@kmp.co.uk</from>
+			<to>aeroparkeralerts@kmp.co.uk</to>
+			<subject>Dev-US-East Subscription Error</subject>
+			<layout class="ch.qos.logback.classic.html.HTMLLayout" />
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+		</appender>
+		<root level="ERROR">
+			<appender-ref ref="errMailer" />
+		</root>
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<Pattern>
+					%d{ISO8601} %-5level --- [%t] %logger{36} : %msg%n
+				</Pattern>
+			</layout>
+		</appender>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</springProfile>
+	<!-- DEV EU WEST -->
+	<springProfile name="dev-eu-west">
+		<appender name="errMailer"
+			class="ch.qos.logback.classic.net.SMTPAppender">
+			<smtpHost>email-smtp.eu-west-1.amazonaws.com</smtpHost>
+			<smtpPort>587</smtpPort>
+			<STARTTLS>true</STARTTLS>
+			<username>AKIAXQHR5J3BYXNMFH6Q</username>
+			<password>BEGM3rFFK6pNAXNif314QNoyz7Tvk17//NzmiN/nRre1</password>
+			<from>subscriptionsalert@kmp.co.uk</from>
+			<to>aeroparkeralerts@kmp.co.uk</to>
+			<subject>Dev-EU-West Subscription Error</subject>
+			<layout class="ch.qos.logback.classic.html.HTMLLayout" />
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+		</appender>
+		<root level="ERROR">
+			<appender-ref ref="errMailer" />
+		</root>
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<Pattern>
+					%d{ISO8601} %-5level --- [%t] %logger{36} : %msg%n
+				</Pattern>
+			</layout>
+		</appender>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</springProfile>
+	<!-- STAGING EU WEST -->
+	<springProfile name="staging-eu-west">
+		<appender name="errMailer"
+			class="ch.qos.logback.classic.net.SMTPAppender">
+			<smtpHost>email-smtp.eu-west-1.amazonaws.com</smtpHost>
+			<smtpPort>587</smtpPort>
+			<STARTTLS>true</STARTTLS>
+			<username>AKIAXQHR5J3BYXNMFH6Q</username>
+			<password>BEGM3rFFK6pNAXNif314QNoyz7Tvk17//NzmiN/nRre1</password>
+			<from>subscriptionsalert@kmp.co.uk</from>
+			<to>aeroparkeralerts@kmp.co.uk</to>
+			<subject>Staging-EU-West Subscription Error</subject>
+			<layout class="ch.qos.logback.classic.html.HTMLLayout" />
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+		</appender>
+		<root level="ERROR">
+			<appender-ref ref="errMailer" />
+		</root>
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<Pattern>
+					%d{ISO8601} %-5level --- [%t] %logger{36} : %msg%n
+				</Pattern>
+			</layout>
+		</appender>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</springProfile>
+	<!-- STAGING US EAST -->
+	<springProfile name="staging-us-east">
+		<appender name="errMailer"
+			class="ch.qos.logback.classic.net.SMTPAppender">
+			<smtpHost>email-smtp.eu-west-1.amazonaws.com</smtpHost>
+			<smtpPort>587</smtpPort>
+			<STARTTLS>true</STARTTLS>
+			<username>AKIAJ5P2N5STXJCEP35Q</username>
+			<password>AnqYpzRkfgI+LYCod/unIE618kxE9YlyilkNrq+t154y</password>
+			<from>subscriptionsalert@kmp.co.uk</from>
+			<to>aeroparkeralerts@kmp.co.uk</to>
+			<subject>Staging-US-East Subscription Error</subject>
+			<layout class="ch.qos.logback.classic.html.HTMLLayout" />
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+		</appender>
+		<root level="ERROR">
+			<appender-ref ref="errMailer" />
+		</root>
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<Pattern>
+					%d{ISO8601} %-5level --- [%t] %logger{36} : %msg%n
+				</Pattern>
+			</layout>
+		</appender>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</springProfile>
+	<!-- PRODUCTION US EAST -->
+	<springProfile name="prod-us-east">
+		<appender name="errMailer"
+			class="ch.qos.logback.classic.net.SMTPAppender">
+			<smtpHost>email-smtp.eu-west-1.amazonaws.com</smtpHost>
+			<smtpPort>587</smtpPort>
+			<STARTTLS>true</STARTTLS>
+			<username>AKIAJ5P2N5STXJCEP35Q</username>
+			<password>AnqYpzRkfgI+LYCod/unIE618kxE9YlyilkNrq+t154y</password>
+			<from>subscriptionsalert@kmp.co.uk</from>
+			<to>aeroparkeralerts@kmp.co.uk</to>
+			<subject>Prod-US-East Subscription Error</subject>
+			<layout class="ch.qos.logback.classic.html.HTMLLayout" />
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+		</appender>
+		<root level="ERROR">
+			<appender-ref ref="errMailer" />
+		</root>
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<Pattern>
+					%d{ISO8601} %-5level --- [%t] %logger{36} : %msg%n
+				</Pattern>
+			</layout>
+		</appender>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</springProfile>
+	<!-- PRODUCTION EU WEST -->
+	<springProfile name="prod-eu-west">
+		<appender name="errMailer"
+			class="ch.qos.logback.classic.net.SMTPAppender">
+			<smtpHost>email-smtp.eu-west-1.amazonaws.com</smtpHost>
+			<smtpPort>587</smtpPort>
+			<STARTTLS>true</STARTTLS>
+			<username>AKIAXQHR5J3BYXNMFH6Q</username>
+			<password>BEGM3rFFK6pNAXNif314QNoyz7Tvk17//NzmiN/nRre1</password>
+			<from>subscriptionsalert@kmp.co.uk</from>
+			<to>aeroparkeralerts@kmp.co.uk</to>
+			<subject>Prod-EU-West Subscription Error</subject>
+			<layout class="ch.qos.logback.classic.html.HTMLLayout" />
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+		</appender>
+		<root level="ERROR">
+			<appender-ref ref="errMailer" />
+		</root>
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<Pattern>
+					%d{ISO8601} %-5level --- [%t] %logger{36} : %msg%n
+				</Pattern>
+			</layout>
+		</appender>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</springProfile>
+	<!-- PRODUCTION EU CENTRAL -->
+	<springProfile name="prod-eu-central">
+		<appender name="errMailer"
+			class="ch.qos.logback.classic.net.SMTPAppender">
+			<smtpHost>email-smtp.eu-west-1.amazonaws.com</smtpHost>
+			<smtpPort>587</smtpPort>
+			<STARTTLS>true</STARTTLS>
+			<username>AKIAXQHR5J3BYXNMFH6Q</username>
+			<password>BEGM3rFFK6pNAXNif314QNoyz7Tvk17//NzmiN/nRre1</password>
+			<from>subscriptionsalert@kmp.co.uk</from>
+			<to>aeroparkeralerts@kmp.co.uk</to>
+			<subject>Prod-EU-Central Subscription Error</subject>
+			<layout class="ch.qos.logback.classic.html.HTMLLayout" />
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>ERROR</level>
+			</filter>
+		</appender>
+		<root level="ERROR">
+			<appender-ref ref="errMailer" />
+		</root>
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<Pattern>
+					%d{ISO8601} %-5level --- [%t] %logger{36} : %msg%n
+				</Pattern>
+			</layout>
+		</appender>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</springProfile>
+	<springProfile name="test">
+		<appender name="Console"
+			class="ch.qos.logback.core.ConsoleAppender">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<Pattern>
+					%d{ISO8601} %-5level --- [%t] %logger{36} : %msg%n
+				</Pattern>
+			</layout>
+		</appender>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</springProfile>
+</configuration>

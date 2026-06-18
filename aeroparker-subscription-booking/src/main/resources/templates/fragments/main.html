@@ -1,0 +1,23 @@
+<main role="main" th:fragment="main">
+	<div class="hero hero--step1">
+	   	<div class="visible-sm-block header-tablet">
+	  	 	<div class="container"></div>
+	  	</div>
+	   	<div class="hero-alt-overlay">
+	   		<div th:replace="fragments/breadcrumb :: breadcrumb"></div>
+		     <div class="hero-alt-overlay__content">
+			 	<p th:utext="${affSubDisplay?.subTitle}"></p>
+		     </div>
+	   </div>
+	   <div th:replace="fragments/no-product-alert :: no-product-alert"></div>
+	   <div th:replace="fragments/date-widget-step1 :: date-widget-step1"></div>
+	   <div class="hero__background" th:style="'background-image: url(' + *{requestBean.uploadUrl + affSubDisplayMedia?.imagePath} +')'">
+	   		<div></div>
+	   </div>
+	</div>
+	<section class="homepage-copy" th:if="${not #strings.isEmpty(affSubDisplay?.midPageText)}">
+		<div class="container">
+			<div class="row" th:utext="${affSubDisplay?.midPageText}"></div>
+		</div>
+	</section>
+</main>

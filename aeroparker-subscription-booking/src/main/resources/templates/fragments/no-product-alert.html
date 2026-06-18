@@ -1,0 +1,7 @@
+<div th:if="${noProduct}" id="errorContainer" class="booking-bar hero-alt-overlay background-none mb-0" style="display: block;" th:fragment="no-product-alert">
+	<div class="alert-banner container" >
+		<div class="alert alert-danger text-center">
+			<p th:text="${languageFieldsList.getTranslation('Sorry, there are no available products for your chosen start date. Please select a different date.')}"></p>
+		</div>
+	</div>
+</div>

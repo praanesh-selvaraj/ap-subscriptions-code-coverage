@@ -1,0 +1,116 @@
+<div th:fragment="address-details" th:remove="tag">
+	<div th:replace="fragments/company-details :: company-details"></div>
+	<div class="form__row"
+		th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.STREET.id)}">
+		<div class="form-group ">
+			<label for="addr1"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.STREET.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.STREET.id) ? '*' : '')}"></label>
+			<input type="text" id="addr1" name="addr1" th:value="*{addr1}"
+				class="form-control"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter the first line of your address.')}"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.STREET.id)}">
+		</div>
+	</div>
+	<div class="form__row"
+		th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.ADDRESS2.id)}">
+		<div class="form-group ">
+			<label for="addr2"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.ADDRESS2.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.ADDRESS2.id) ? '*' : '')}">Address Line 2</label>
+				 <input type="text" id="addr2" name="addr2"
+					th:value="*{addr2}" class="form-control"
+					data-parsley-trigger="keyup focusout submit"
+					th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter the second line of your address.')}"
+					th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.ADDRESS2.id)}">
+		</div>
+	</div>
+	<div class="form__row"
+		th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.TOWN.id)}">
+		<div class="form-group ">
+			<label for="town"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.TOWN.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.TOWN.id) ? '*' : '')}">Town</label>
+			<input type="text" id="town" name="town" th:value="*{town}"
+				class="form-control"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your town.')}"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.TOWN.id)}">
+		</div>
+	</div>
+	<div th:if="${not showCountyDropDown}" th:remove="tag">
+		<div class="form__row"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.COUNTY.id)}">
+			<div class="form-group ">
+				<label for="county"
+					th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.COUNTY.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.COUNTY.id) ? '*' : '')}">County</label>
+				<input type="text" id="county" name="county" th:value="*{county}"
+					class="form-control"
+					data-parsley-trigger="keyup focusout submit"
+					th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your county.')}"
+					th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.COUNTY.id)}">
+			</div>
+		</div>
+	</div>
+	<div th:unless="${not showCountyDropDown}" th:remove="tag">
+		<div class="form__row"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.COUNTY.id)}">
+			<div class="form-group ">
+				<label for="county"
+					th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.COUNTY.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.COUNTY.id) ? '*' : '')}">County</label>
+					<select id="county" name="county" class="form-control" 
+						data-parsley-trigger="keyup focusout submit" th:data-parsley-required-message="${languageFieldsList.getTranslation('Please select your county')}"
+						th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.COUNTY.id)}">
+						<option value="">--</option>
+						<option th:each="county : ${counties}" th:value="${county.key}" th:text="${languageFieldsList.getTranslation(county.value)}"
+						 th:with="countySel=*{county}" th:selected="${#strings.equals(county.value, countySel)}"></option>
+					</select>
+			</div>
+		</div>
+	</div>
+	<div class="form__row"
+		th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.POSTCODE.id)}">
+		<div class="form-group ">
+			<label for="postcode"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.POSTCODE.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.POSTCODE.id) ? '*' : '')}">Postcode</label>
+			<input type="text" id="postcode" name="postcode"
+				th:value="*{postcode}" class="form-control"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your postcode.')}"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.POSTCODE.id)}">
+		</div>
+	</div>
+	<div class="form__row"
+		th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.COUNTRY.id)}">
+		<div class="form-group ">
+			<label for="country"
+				th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.COUNTRY.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.COUNTRY.id) ? '*' : '')}">Country</label>
+			<select id="country" name="country" class="form-control"
+				data-parsley-trigger="keyup focusout submit"
+				th:data-parsley-required-message="${languageFieldsList.getTranslation('Please select your country')}"
+				th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.COUNTRY.id)}">
+				<option value="">--</option>
+				<option th:each="country : ${countries}" th:value="${country.value}"
+					th:text="${languageFieldsList.getTranslation(country.value)}"
+					th:with="countrySel=*{country}"
+					th:selected="${#strings.equals(country.value, countySel)}"></option>
+			</select>
+		</div>
+	</div>
+	<div class="form__row"
+		th:if="${#lists.contains(paymentStepFields, paymentStepFieldsList.TAX_RECEIPT.id) && !#lists.contains(mandatoryFields, paymentStepFieldsList.TAX_RECEIPT.id)}">
+		<div class="form-group">
+			<div class="form-group">
+				<div class="check-group">
+					<input type="checkbox" name="receiptCheckbox" id="receipt_checkbox"
+						class="form-check-input"
+						th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.TAX_RECEIPT.id)}">
+					<label class="form-check-label" for="receipt_checkbox"
+						th:text="${languageFieldsList.getTranslation('I would like to receive an invoice ')}">
+						I would like to receive an invoice</label>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div id="receipt_div" th:style="${#lists.contains(mandatoryFields, paymentStepFieldsList.TAX_RECEIPT.id)} ? 'display:block;' : 'display:none;'">
+        <div th:replace="fragments/receipt-details :: receipt-details"></div>
+    </div>
+</div>

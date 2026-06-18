@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header-css (styleSheetUrl= ${requestBean.affiliatesDisplay?.styleSheetUrl}, affiliateMetadata=${requestBean.affiliatesMetadata}, favIconPath=${requestBean.affiliatesDisplay?.faviconUrl})" >
+</head>
+<body>
+	<div class="wrapper wrapper--multipurchase" th:with="affiliateDisplay= ${requestBean.affiliatesDisplay}, affSubDisplay=${requestBean.affiliateSubscription},
+		 affSubDisplayMedia=${requestBean.affiliateSubscriptionMedia}, affSubSettings=${requestBean.affiliateSubscriptionSettings}">
+		<div th:replace="fragments/header-main :: header-main" ></div>
+		<main class="bg-1" role="main">
+			<div th:replace="fragments/booking-details :: booking-details" ></div>
+			<div th:if="${showResendConfEmail}" th:replace="fragments/resend-confirmation-modal :: resend-confirmation-modal"></div>
+			<footer th:replace="fragments/footer :: footer" ></footer>
+		</main>
+	</div>
+	<div th:replace="fragments/body-scripts :: body-scripts"></div>
+	<script th:src="@{../js/manage-booking.js}"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="aeroparker-subscription-payments" />
+        <module name="aeroparker-subscription-booking-generated" />
+        <module name="aeroparker-subscription-payments-generated" />
+        <module name="aeroparker-subscription-db-config" />
+        <module name="aeroparker-subscription-booking" />
+        <module name="aeroparker-subscription-utils" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

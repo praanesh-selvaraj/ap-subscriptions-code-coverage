@@ -1,0 +1,68 @@
+<div id="personalDetails" class="form__section form__section--block-fields" th:fragment="personal-details">
+	<div class="form__heading">
+		<h2 th:text="${languageFieldsList.getTranslation('Personal Details')}">Personal Details</h2>
+	</div>
+	<div class="form__content form-edit form-edit__wide">
+		<div class="form__row">
+			<div class="form-group form-group--ib" th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.TITLE.id)}">
+				<label for="title" th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.TITLE.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.TITLE.id) ? '*' : '')}">Title</label>
+				<div class="custom-select-wrap">
+					<select name="title" id="title" class="custom-select" data-parsley-trigger="focusout submit" th:data-parsley-required-message="${languageFieldsList.getTranslation('Please select your title')}"
+							 th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.TITLE.id)}">
+						<option value="">--</option>
+						<option th:each="titleField : ${titleFields}" th:with="titlePaymentStepFields=${paymentStepFieldsList.getById(titleField)}, title=*{title}" th:value="${titlePaymentStepFields.label}" th:text="${languageFieldsList.getTranslation(titlePaymentStepFields.label)}"
+							th:selected="${#strings.equals(titlePaymentStepFields.label,title)}">Mr</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group form-group--ib"  th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.FIRST_NAME.id)}">
+				<label for="firstName" th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.FIRST_NAME.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.FIRST_NAME.id) ? '*' : '')}">First name</label>
+				<input type="text" id="firstName" name="fname" th:value="*{fname}" class="form-control" data-parsley-trigger="keyup focusout submit"
+					th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your first name')}" 
+					 th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.FIRST_NAME.id)}">
+			</div>
+			<div class="form-group form-group--ib" th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.LAST_NAME.id)}">
+				<label for="lastName" th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.LAST_NAME.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.LAST_NAME.id) ? '*' : '')}">Last name</label>
+				<input type="text" id="lastName" name="lname" th:value="*{lname}" class="form-control" data-parsley-trigger="keyup focusout submit" th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your last name')}" 
+						th:required="${#lists.contains(mandatoryFields,  paymentStepFieldsList.LAST_NAME.id)}">
+			</div>
+		</div>
+		<div class="form__row" th:if="${#lists.contains(paymentStepFields, paymentStepFieldsList.EMAIL.id)}">
+			<div class="form-group">
+				<label for="email" th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.EMAIL.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.EMAIL.id) ? '*' : '')}">Email</label>
+				<input type="email" name="email" id="emailInput" th:value="*{email}" class="form-control" data-parsley-trigger="keyup focusout submit" th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter a valid email address.')}" th:data-parsley-type-message="${languageFieldsList.getTranslation('Please enter a valid email address.')}" th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.EMAIL.id)}" placeholder="Enter your email">
+				<label class="input-information"    th:text="${languageFieldsList.getTranslation('We will send your booking confirmation and important information to the email address you provide')}">
+				</label>	
+				<div id="emailValidationError" class="alert alert-danger" style="display: none;"></div>
+			</div>
+		</div>
+ 		<div class="form__row" th:if="${#lists.contains(paymentStepFields, paymentStepFieldsList.CONFIRM_EMAIL.id)}"> 
+ 			<div class="form-group"> 
+ 				<label for="confEmail" th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.CONFIRM_EMAIL.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.CONFIRM_EMAIL.id) ? '*' : '')}">Confirm Email</label> 
+ 				<input type="confEmail" name="confEmail" id="confEmail" onpaste="return false;" autocomplete="off;" th:value="*{confEmail}" class="form-control" data-parsley-trigger="focusout submit" data-parsley-equalto="#emailInput" 
+ 					th:data-parsley-equalto-message="${languageFieldsList.getTranslation('Email does not match')}" 
+ 					th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter a valid email address')}" 
+ 					th:data-parsley-type-message="${languageFieldsList.getTranslation('Please enter a valid email address')}"th:required="${#lists.contains(mandatoryFields,  paymentStepFieldsList.CONFIRM_EMAIL.id)}"> 
+ 			</div> 
+ 		</div> 
+		<div class="form__row"
+			th:if="${#lists.contains(paymentStepFields,  paymentStepFieldsList.MOBILE_NUMBER.id)}">
+			<div class="form-group">
+				<label for="contactNo"
+					th:text="${languageFieldsList.getTranslation(paymentStepFieldsList.MOBILE_NUMBER.label) +' '+ (#lists.contains(mandatoryFields,  paymentStepFieldsList.MOBILE_NUMBER.id) ? '*' : '')}">Mobile
+					Number</label> <input type="tel" name="telno" id="contactNo"
+					th:value="*{telno}" class="form-control input-date"
+					data-parsley-trigger="focusout submit"
+					data-parsley-length="[7, 20]"
+					th:data-parsley-length="${#strings.contains(requestBean.affiliate.code, 'EIN') ? '[0,63]' : '[7,20]'}"
+					th:data-parsley-pattern="${#strings.contains(requestBean.affiliate.code, 'EIN') ? '^[^a-z^A-Z]+$' : '\+?\d+'}"
+					th:data-parsley-pattern-message="${languageFieldsList.getTranslation('Please enter a valid mobile number')}"
+					th:data-parsley-required-message="${languageFieldsList.getTranslation('Please enter your mobile number')}"
+					th:data-parsley-length-message="${languageFieldsList.getTranslation('Please enter a valid mobile number')}"
+					th:data-parsley-type-message="${languageFieldsList.getTranslation('Please enter a valid mobile number')}"
+					th:required="${#lists.contains(mandatoryFields, paymentStepFieldsList.MOBILE_NUMBER.id)}">
+			</div>
+		</div>
+		<div th:replace="fragments/address-details :: address-details"></div>
+	</div>
+</div>

@@ -1,0 +1,62 @@
+<header class="header-main" th:fragment="header-main">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="navbar-header" th:with="bannerImageUrl=${affiliateDisplay?.bannerImgUrl}, siteId=${requestBean.siteId}">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>	
+                    <a th:href="@{${affiliateDisplay?.homeUrl}}" class="logo logo--inline navbar-brand">
+	                  	<block th:if="${not #strings.isEmpty(bannerImageUrl)}" th:remove="tag">
+	                        <img th:if="${#strings.startsWith(bannerImageUrl, '../skins') or #strings.startsWith(bannerImageUrl, 'http')}" th:src="@{${bannerImageUrl}}" th:alt="${requestBean.affiliate.name}" data-retina-resize="false">
+	                        <img th:unless="${#strings.startsWith(bannerImageUrl, '../skins') or #strings.startsWith(bannerImageUrl, 'http')}" th:src="@{${requestBean.uploadUrl + '/headerimages/' + siteId  + '/' + bannerImageUrl}}" th:alt="${requestBean.affiliate.name}" data-retina-resize="false">
+	                    </block>
+	                    <block th:unless="${not #strings.isEmpty(bannerImageUrl)}" th:remove="tag">
+	                        <img src="" th:alt="${requestBean.affiliate.name}" data-retina-resize="false">
+	                    </block>
+                        <div class="icon-seattle-logo"></div>
+                    </a>
+                </div>
+                <div th:if="${not #strings.isEmpty(header)}" class="navbar-left text-center">
+					<h1 th:text="${currenStage == 1 ? header : languageFieldsList.getTranslation(header)}"></h1>
+                </div>
+                
+                <div th:if="${not #strings.isEmpty(contentTitle)}" th:replace="fragments/footer-content :: footer-content-title" ></div>
+                
+                <div class="collapse navbar-collapse navbar-right" id="menu">
+	                 <ul class="account-ui"> 
+	                 	<li>
+	                 		<a href="view-booking" th:text="${languageFieldsList.getTranslation('View Subscription')}">View Subscription</a>
+	                 	</li>
+	                     <li th:if="${!#lists.isEmpty(languageList)}">
+		                      <div class="select-language-dropdown">
+									<a class="dropdown-toggle" type="button" data-toggle="dropdown">
+									    <img th:src="${'../images/flag_icons/' + requestBean.currentLanguage.languageCode + '.gif'}" onclick="$('.dropdown-menu').toggle();" data-retina-resize="false">
+									</a>
+									<ul class="dropdown-menu">
+									    <li class="dropdown-entry" th:each="language : ${languageList}"  th:onclick="changeLanguage([[${language.displayCode}]]);">
+									        <img th:src="${'../images/flag_icons/' + language.languageCode + '.gif'}" data-retina-resize="false"/>&nbsp;
+									         <div class="language-code" th:text="${not #strings.isEmpty(language.displayName) ?  language.displayName : language.languageCode}">en-gb</div><br>
+									     </li>
+									</ul>
+									<script th:inline="javascript">
+									/*<![CDATA[*/ 
+										function changeLanguage(languageCode) {
+											var url = window.location.href.split("#")[0];
+											url = url.replace(/[?|&]lang=[^&]*/g, "");
+											url += url.indexOf("?") == -1 ? "?" : "&";
+											window.location.href=url + "lang=" + languageCode;
+										}
+									/*]]>*/
+									</script>
+		                      </div>
+	                     </li>
+	                 </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

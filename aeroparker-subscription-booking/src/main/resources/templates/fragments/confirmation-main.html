@@ -1,0 +1,72 @@
+<div class="container confirmation__container" th:fragment="confirmation-main" th:object="${confirmationDetails}">
+	<div class="row">
+		<div class="col-sm-12 col-md-10 col-md-offset-1">
+			<div class="confirmation">
+				<div class="confirmation__message" th:text="${languageFieldsList.getTranslation('Thank you for booking with {airport}', requestBean.affiliate.name)}">					
+				</div>
+				<th:block
+					th:if="${bodyAnalytics != null and !#strings.isEmpty(bodyAnalytics)}"
+					th:utext="${bodyAnalytics}"></th:block>
+				<section class="confirmation__item">
+					<h5 th:text="${languageFieldsList.getTranslation('Your booking confirmation email will be with you shortly')}">Your booking confirmation email will be with you shortly</h5>
+					<h2 class="confirmation__title" th:text="|${languageFieldsList.getTranslation(affSubSettings?.referToBookingReferenceAs ?: 'Booking Reference')} :&nbsp; *{reference}|">Booking Reference</h2>
+						<div class="row confirmation__detail">
+							<div class="col-sm-6">
+								<dl>
+									<dt th:text="${languageFieldsList.getTranslation('Name') + ':'}">Name:</dt>
+									<dd th:text="*{name}">Derrick</dd>
+									<dt th:text="${languageFieldsList.getTranslation('Email') + ':'}">Email:</dt>
+									<dd th:text="*{email}">derrick@aeroparker.com</dd>
+									<th:block th:each="confirmationProductDetail : *{confirmationProductDetailList}">
+										<dt th:text="${languageFieldsList.getTranslation('Product') + ':'}">Product:</dt>
+										<dd th:text="${confirmationProductDetail.displayName}">subscription product</dd>
+										<dt th:text="${languageFieldsList.getTranslation('Start Date') + ':'}">Start Date:</dt>
+										<dd th:text="${confirmationProductDetail.startDate}">04/11/2019</dd>
+										<dt th:if="${confirmationProductDetail.isSeasonTicket()}" th:text="${languageFieldsList.getTranslation('End Date') + ':'}">End Date:</dt>
+										<dd th:if="${confirmationProductDetail.isSeasonTicket()}" th:text="${confirmationProductDetail.endDate}">04/12/2019</dd>
+									</th:block>
+									
+									<div th:if="${affSubSettings?.displayTaxConfirmation ?: true}">
+										<dt class="conf-company" th:text="${languageFieldsList.getTranslation('Company') + ':'}">Company:</dt>
+										<dd class="conf-company" th:text="*{vatCompany}">Aeroparker</dd>
+										<dt class="conf-vat-no" th:text="${languageFieldsList.getTranslation('Vat No') + ':'}">Vat No:</dt>
+										<dd class="conf-vat-no" th:text="*{vatNo}">0125448</dd>
+										<dt class="conf-address" th:text="${languageFieldsList.getTranslation('Address') + ':'}">Address:</dt>
+										<dd class="conf-address" th:text="*{vatAddress}">aeroparker rd, SK</dd>
+									</div>
+							</dl>
+							</div>
+							<div class="col-sm-6 second-column">
+								<dl>			
+									<dt th:text="${languageFieldsList.getTranslation('Taxpoint Date') + ':'}">Taxpoint Date:</dt>
+									<dd th:text="*{bookingDateTime}">bookingDateTimeString</dd>
+									<div th:if="${affSubSettings?.displayTaxConfirmation ?: true}">
+										<dt th:text="${languageFieldsList.getTranslation('Net') + ':'}">Net:</dt>
+										<dd th:with="grandTotalBeforeTax=*{grandTotalBeforeTax}" th:utext="${localise.price(grandTotalBeforeTax)}"></dd>
+										<dt th:text="${languageFieldsList.getTranslation('Vat') + ':'}">Vat:</dt>
+										<dd th:with="grandTotalTax=*{grandTotalTax}" th:utext="${localise.price(grandTotalTax)}"></dd>
+									</div>
+									<dt th:if="*{totalBookingFee &gt; 0}" th:text="${languageFieldsList.getTranslation('Booking Fee') + ':'}">Booking Fee:</dt>
+									<dd th:if="*{totalBookingFee &gt; 0}" th:with="totalBookingFee=*{totalBookingFee}" th:utext="${localise.price(totalBookingFee)}"></dd>
+									<dt class="confirmation__total-title">
+										<span th:text="${languageFieldsList.getTranslation('Total')}">Total</span>
+									</dt>
+									<dd class="confirmation__total-val">
+										<span th:with="grandTotal=*{grandTotal}" th:utext="${localise.price(grandTotal)}"></span>
+									</dd>
+								</dl>
+							</div>
+					</div>
+				</section>
+				<div th:each ="message : *{confirmationMessages}">					
+					<div th:utext="${message.value}">aeroparker</div>
+				</div>
+				<div class="confirmation__ui cf">
+					<a th:style="${affSubSettings?.displayHomeAndBackButtons ?: true} ? '' : 'display:none;'" href="dates" class="btn btn-default" th:text="${languageFieldsList.getTranslation('Home')}">Home</a>
+					<a th:href="@{view-booking(reference=*{reference}, email=*{email})}" class="btn btn-primary pull-right" th:text="${languageFieldsList.getTranslation('View Subscription')}">View Subscription</a>
+					<a th:href="@{SubscriptionInvoice(encryptedRef=${encryptedReference})}" class="btn btn-primary pull-right" th:text="${languageFieldsList.getTranslation('Download Invoice')}">Download Invoice</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/header :: header-css (styleSheetUrl= ${requestBean.affiliatesDisplay.styleSheetUrl}, affiliateMetadata=${requestBean.affiliatesMetadata}, favIconPath=${requestBean.affiliatesDisplay?.faviconUrl})" />
+	<body>
+		<script th:src="@{../js/bower.min.js(v=${jsCssQueryString})}"></script>
+		<div class="wrapper wrapper--multipurchase" th:with="affiliateDisplay= ${requestBean.affiliatesDisplay}, affSubDisplay=${requestBean.affiliateSubscription},
+					 affSubDisplayMedia=${requestBean.affiliateSubscriptionMedia}, affSubSettings=${requestBean.affiliateSubscriptionSettings}">
+			<header th:replace="fragments/header-main :: header-main"></header>
+			<th:block
+				th:if="${upperHeadAnalytics != null and !#strings.isEmpty(upperHeadAnalytics)}"
+				th:utext="${upperHeadAnalytics}">
+			</th:block>
+
+			<th:block
+				th:if="${lowerHeadAnalytics != null and !#strings.isEmpty(lowerHeadAnalytics)}"
+				th:utext="${lowerHeadAnalytics}">
+			</th:block>
+			<main role="main" class="bg-1 main__standalone">
+				<div th:replace="fragments/back-btn :: back-btn (backUrl=${'view-booking?email=' + session.email + '&reference=' + session.reference})"></div>
+
+				<div th:replace="fragments/renewal-payment :: renewal-payment"></div>
+				<th:block
+					th:if="${footerAnalytics != null and !#strings.isEmpty(footerAnalytics)}"
+					th:utext="${footerAnalytics}">
+				</th:block>
+				<footer th:replace="fragments/footer :: footer"></footer>
+			</main>
+		</div>
+		<script th:src="@{../js/ui.min.js(v=${jsCssQueryString})}"></script>
+		<script src="../js/block-ui.js"></script>
+		<script th:src="@{../js/util.js}"></script>
+		<script th:src="@{../js/details.js}"></script>
+		<script th:src="@{../js/footer.js}"></script>
+	</body>
+</html>
