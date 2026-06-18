@@ -13,7 +13,6 @@ import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.Provider;
 import java.security.Security;
 import java.util.Base64;
 
@@ -25,7 +24,6 @@ import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
 import com.kmp.aeroparker.subscription.string.utils.StringUtil;
 
-import cryptix.jce.provider.CryptixCrypto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -73,8 +71,8 @@ public final class SecurityUtil
 	public static void init()
 	{
 		log.debug("Initializing Security Util");
-		String provider = "CryptixCrypto";
-		String transformation = "Blowfish/ECB/PKCS#5";
+		String provider = "SunJCE";
+		String transformation = "Blowfish/ECB/PKCS5Padding";
 
 		try
 		{
@@ -108,28 +106,7 @@ public final class SecurityUtil
 
 	private static boolean addProviderCryptix()
 	{
-		// First add the provider (in this case cryptix) dynamicly to the
-		// provider list. If this should be staticly edit the java.security
-		// file and add the line:
-		// security.provider.X=cryptix.jce.provider.Cryptix
-		// where X specifies the desired priority of the provider in the
-		// provider list.
-
-		// create a new Cryptix provider.
-		Provider cryptix_provider = new CryptixCrypto();
-
-		// Result either returns the position of the provider or -1 if the
-		// provider already exists.
-		int result = Security.addProvider(cryptix_provider);
-
-		if (result == -1)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return Security.getProvider("SunJCE") != null;
 	}
 
 	public static String encryptString(String stringToEncrypt)

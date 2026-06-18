@@ -1,0 +1,110 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.kmp.aeroparker</groupId>
+		<artifactId>aeroparker-api-login</artifactId>
+		<version>1.0.1</version>
+	</parent>
+
+	<artifactId>aeroparker-api-login-common</artifactId>
+
+	<name>aeroparker-api-login-common</name>
+	<url>http://maven.apache.org</url>
+	
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>releases</name>
+			<url>${url.libs-release}</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>${url.libs-snapshot}</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<aeroparker-version>1.0.0</aeroparker-version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-api-generated</artifactId>
+			<version>${aeroparker-version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.kmp.aeroparker</groupId>
+					<artifactId>aeroparker-instrumentation</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.kmp.aeroparker</groupId>
+					<artifactId>aeroparker-instrumentation-generated</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+		    <groupId>org.jooq</groupId>
+		    <artifactId>jooq</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+    		<version>3.19.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20220320</version>
+		</dependency>
+		<dependency>
+		    <groupId>ch.qos.reload4j</groupId>
+		    <artifactId>reload4j</artifactId>
+		    <version>1.2.21</version>
+		</dependency>				
+	</dependencies>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle-version}</version>
+				<configuration>
+					<configLocation>src/test/resources/checkstyle/kmp_checks.xml</configLocation>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
+</project>

@@ -21,6 +21,9 @@
             </activation>
             <properties>
                 <java.version>1.8</java.version>
+                <jdbc.url>jdbc:mysql://aeroparker-dev-cluster.cluster-cy1qv9ebxvvz.ap-south-1.rds.amazonaws.com:3306/kmp_advancebooker</jdbc.url>
+                <jdbc.user>advancebooker</jdbc.user>
+                <jdbc.password>${env.DB_PASSWORD}</jdbc.password>
                 <url.libs-release>s3://aeroparker-maven/release</url.libs-release>
                 <url.libs-snapshot>s3://aeroparker-maven/snapshot</url.libs-snapshot>
                 <url.ext-release-local>s3://aeroparker-maven/release</url.ext-release-local>
@@ -28,6 +31,13 @@
                 <url.central>https://repo.maven.apache.org/maven2</url.central>
             </properties>
             <repositories>
+                <repository>
+                    <id>ci-local</id>
+                    <url>file://${user.dir}/.ci-maven-repo</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
                 <repository>
                     <id>maven-central</id>
                     <url>${url.central}</url>

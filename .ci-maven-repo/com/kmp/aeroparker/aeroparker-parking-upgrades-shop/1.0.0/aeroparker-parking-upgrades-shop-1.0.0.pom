@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.kmp.aeroparker</groupId>
+	<artifactId>aeroparker-parking-upgrades-shop</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+
+	<name>aeroparker-parking-upgrades-shop</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<javax.servlet-api-version>3.1.0</javax.servlet-api-version>
+    	<java-version>1.8</java-version>
+    	<jstl-version>1.2</jstl-version>
+    	<aeroparker-version>1.0.0</aeroparker-version>
+    	<aeroparker-snapshot-version>0.0.1-SNAPSHOT</aeroparker-snapshot-version>
+	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>releases</name>
+			<url>${url.ext-release-local}</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>${url.ext-snapshot-local}</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<parent>
+		<groupId>com.kmp.aeroparker</groupId>
+		<artifactId>aeroparker-build</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../aeroparker-build/pom.xml</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-parking-upgrades</artifactId>
+			<version>${aeroparker-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-payments-shop</artifactId>
+			<version>${aeroparker-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-buckets</artifactId>
+			<version>${aeroparker-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet-api-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.servlet.jsp</groupId>
+		    <artifactId>jsp-api</artifactId>
+		    <version>2.2</version>
+		</dependency>		
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-common-test</artifactId>
+			<version>${aeroparker-snapshot-version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+  	
+	<build>
+		<finalName>aeroparker-parking-upgrades-shop</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

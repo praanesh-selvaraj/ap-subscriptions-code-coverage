@@ -52,10 +52,5 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>cryptix</groupId>
-			<artifactId>cryptix-jce-provider</artifactId>
-			<version>1.0.0</version>
-		</dependency>
 	</dependencies>
 </project>

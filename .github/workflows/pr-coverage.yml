@@ -32,21 +32,13 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: mvn -B test --settings .github/maven-settings.xml -Dsurefire.excludes="**/*IT.java"
+          AWS_REGION: ap-south-1
+        run: mvn -B test --settings .github/maven-settings.xml -Dsurefire.excludes="**/*IT.java" -Djooq.codegen.skip=true
 
       - name: Post coverage comment
-        uses: madrapps/jacoco-report@v1.6
+        uses: madrapps/jacoco-report@v1.8.0
         with:
-          paths: >
-            ${{ github.workspace }}/aeroparker-subscription-booking/target/site/jacoco/jacoco.xml,
-            ${{ github.workspace }}/aeroparker-subscription-payments/target/site/jacoco/jacoco.xml,
-            ${{ github.workspace }}/aeroparker-subscription-utils/target/site/jacoco/jacoco.xml,
-            ${{ github.workspace }}/aeroparker-subscription-db-config/target/site/jacoco/jacoco.xml
+          paths: ${{ github.workspace }}/aeroparker-subscription-booking/target/site/jacoco/jacoco.xml,${{ github.workspace }}/aeroparker-subscription-payments/target/site/jacoco/jacoco.xml,${{ github.workspace }}/aeroparker-subscription-utils/target/site/jacoco/jacoco.xml,${{ github.workspace }}/aeroparker-subscription-db-config/target/site/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Coverage Report
           update-comment: true
-          source-paths: >
-            aeroparker-subscription-booking/src/main/java,
-            aeroparker-subscription-payments/src/main/java,
-            aeroparker-subscription-utils/src/main/java,
-            aeroparker-subscription-db-config/src/main/java
