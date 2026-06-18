@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.kmp.aeroparker</groupId>
+		<artifactId>aeroparker-build</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../aeroparker-build/pom.xml</relativePath>
+	</parent>
+	
+	<artifactId>aeroparker-common-i18n</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>AeroParker - Internationalisation</name>
+	<url>http://www.aeroparker.com</url>
+	
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>releases</name>
+			<url>${url.ext-release-local}</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>${url.ext-snapshot-local}</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<properties>
+		<aeroparker-version>1.0.0</aeroparker-version>
+		<aeroparker-snapshot-version>0.0.1-SNAPSHOT</aeroparker-snapshot-version>
+		<mockrunner-version>1.1.0</mockrunner-version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-common-db</artifactId>
+			<version>${aeroparker-snapshot-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-common-test</artifactId>
+			<version>${aeroparker-snapshot-version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>api-instrumentation</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>AeroParker API Instrumentation</name>
+	<url>http://www.aeroparker.com</url>
+	
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>releases</name>
+			<url>${url.ext-release-local}</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>${url.ext-snapshot-local}</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<parent>
+		<groupId>com.kmp.aeroparker</groupId>
+		<artifactId>aeroparker-external-api-parent</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../aeroparker-external-api-parent</relativePath>
+	</parent>
+
+	<dependencies>		
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>api-core</artifactId>
+			<version>${aeroparker-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>api-instrumentation-generated</artifactId>
+			<version>${aeroparker-snapshot-version}</version>
+		</dependency>
+	</dependencies>
+</project>

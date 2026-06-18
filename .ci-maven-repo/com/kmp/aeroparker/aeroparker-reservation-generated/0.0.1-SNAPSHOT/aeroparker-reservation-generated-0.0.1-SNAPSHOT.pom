@@ -1,0 +1,231 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.kmp.aeroparker</groupId>
+		<artifactId>aeroparker-build</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../aeroparker-build/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>aeroparker-reservation-generated</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>aeroparker-reservation-generated</name>
+
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>releases</name>
+			<url>${url.ext-release-local}</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>${url.ext-snapshot-local}</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<aeroparker-snapshot-version>0.0.1-SNAPSHOT</aeroparker-snapshot-version>
+		<aeroparker-version>1.0.0</aeroparker-version>
+		<checkstyle.version>2.17</checkstyle.version>
+		<jooq-version>3.10.8</jooq-version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-common-db</artifactId>
+			<version>${aeroparker-snapshot-version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>aeroparker-reservation-generated</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- Specify the maven code generator plugin -->
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>${jooq-version}</version>
+				<!-- The plugin should hook into the generate goal -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<!-- Manage the plugin's dependency. In this example, we'll use a PostgreSQL 
+					database -->
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>8.0.33</version>
+					</dependency>
+					<dependency>
+						<groupId>com.kmp.aeroparker</groupId>
+						<artifactId>aeroparker-common-db</artifactId>
+						<version>${aeroparker-snapshot-version}</version>
+					</dependency>
+				</dependencies>
+				<!-- Specify the plugin configuration. The configuration format is the 
+					same as for the standalone code generator -->
+				<configuration>
+					<jdbc>
+						<driver>com.mysql.jdbc.Driver</driver>
+						<!-- These should be set in your active profile in the maven settings.xml -->
+						<url>${jdbc.url}</url>
+						<user>${jdbc.user}</user>
+						<password>${jdbc.password}</password>
+					</jdbc>
+					<generator>
+						<name>org.jooq.util.JavaGenerator</name>
+						<database>
+							<name>org.jooq.util.mysql.MySQLDatabase</name>
+							<includes>reservation.*|payments_reservation|payments_booking|payments_shop_order
+								|ancillary_barcode_sequence|reservation_tracking|booking_tracking|shop_order_tracking
+								|payments|reservation_confirmation_redirect|reservation_hidden_product
+								|ab_affiliates|ab_affiliate_config_values|reservation_price_reduction
+								|reservation_multi_lounge|confirmation_reload|partial_payments|partial_payments_reservation|ab_products
+								|reservation_refresh_token|reservation_social_security_number
+							</includes>
+							<inputSchema>kmp_advancebooker</inputSchema>
+							<outputSchemaToDefault>true</outputSchemaToDefault>
+							<customTypes>
+								<customType>
+									<name>LocalDateTime</name>
+									<type>java.time.LocalDateTime</type>
+									<converter>com.kmp.aeroparker.model.db.jooq.converters.TimestampToLocalDateTimeConverter</converter>
+								</customType>
+								<customType>
+									<name>VarcharToBigDecimal</name>
+									<type>java.math.BigDecimal</type>
+									<converter>com.kmp.aeroparker.model.db.jooq.converters.VarcharToBigDecimalConverter</converter>
+								</customType>
+							</customTypes>
+							<forcedTypes>
+								<forcedType>
+									<name>LocalDateTime</name>
+									<expression>.*</expression>
+									<!-- Must be lower case. Many a tear was shed trying to figure this 
+										out. -->
+									<types>timestamp</types>
+								</forcedType>
+								<forcedType>
+									<name>LocalDateTime</name>
+									<expression>.*</expression>
+									<!-- Must be lower case. Many a tear was shed trying to figure this 
+										out. -->
+									<types>datetime</types>
+								</forcedType>
+								<forcedType>
+									<name>VarcharToBigDecimal</name>
+									<expression>
+										.*reservation_basket.grandTotal|.*reservation_basket.cardChargeAmount|.*reservation_basket.totalNet
+										|.*reservation_basket_item_parking.price|.*reservation_basket_item_parking.originalQuote
+										|.*reservation_basket_item_lounge.price|.*reservation_basket_item_lounge.adultUnitPrice
+										|.*reservation_basket_item_lounge.childUnitPrice|.*reservation_basket_item_lounge.infantUnitPrice
+										|.*reservation_basket_item_lounge.SeniorUnitPrice|.*reservation_basket_item_simple_ticket.price
+										|.*reservation_basket_item_simple_ticket.ticketUnitPrice|.*reservation_basket_item_extra.price
+										|.*reservation_discount.moneyOff|.*reservation_upgrade.upgradeAmount
+									</expression>
+									<types>varchar</types>
+								</forcedType>
+							</forcedTypes>
+						</database>
+						<strategy>
+							<!-- Strategies cannot be in the same project as the generated code, 
+								must be in another project that is added as a dependency -->
+							<name>com.kmp.aeroparker.model.db.jooq.generators.CleanPojoAndDaoGeneratorStrategy</name>
+						</strategy>
+						<generate>
+							<deprecated>false</deprecated>
+							<pojos>true</pojos>
+							<daos>true</daos>
+						</generate>
+						<target>
+							<packageName>com.kmp.aeroparker.model.reservation.jooq</packageName>
+							<directory>src/main/generated</directory>
+						</target>
+					</generator>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/main/generated</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/generated</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.jooq</groupId>
+										<artifactId>
+											jooq-codegen-maven
+										</artifactId>
+										<versionRange>
+											[3.4.5,)
+										</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

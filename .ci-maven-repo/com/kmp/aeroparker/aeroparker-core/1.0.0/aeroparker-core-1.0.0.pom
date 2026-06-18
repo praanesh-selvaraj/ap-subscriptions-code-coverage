@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.kmp.aeroparker</groupId>
+		<artifactId>aeroparker-build</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../aeroparker-build/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>aeroparker-core</artifactId>
+	<packaging>jar</packaging>
+
+	<name>AeroParker Core Library</name>
+	<url>http://www.aeroparker.com</url>
+
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>releases</name>
+			<url>${url.ext-release-local}</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>${url.ext-snapshot-local}</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<aeroparker-snapshot-version>0.0.1-SNAPSHOT</aeroparker-snapshot-version>
+		<aeroparker-version>1.0.0</aeroparker-version>
+		<java-version>1.8</java-version>
+		<checkstyle.version>2.17</checkstyle.version>
+		<maven-project-info-reports-plugin.version>2.8.1</maven-project-info-reports-plugin.version>
+		<mockrunner-version>1.1.0</mockrunner-version>
+		<junit-version>4.12</junit-version>
+		<httpclient-version>4.5.3</httpclient-version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-promotions</artifactId>
+			<version>${aeroparker-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-travel-extras</artifactId>
+			<version>${aeroparker-snapshot-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.kmp.aeroparker</groupId>
+			<artifactId>aeroparker-common-test</artifactId>
+			<version>${aeroparker-snapshot-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>uk.co.hpi</groupId>
+			<artifactId>hpi-coreenquiry</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.49</version>
+		    <scope>provided</scope>
+		</dependency>		
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>local-repo</id>
+			<url>file://${basedir}/localrepo</url>
+		</repository>
+	</repositories>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+				</configuration>
+			</plugin>			
+			<plugin>
+			  	<groupId>org.apache.maven.plugins</groupId>
+			  	<artifactId>maven-jar-plugin</artifactId>
+			  	<version>2.6</version>
+			  	<executions>
+			    	<execution>
+			      		<goals>
+			        		<goal>test-jar</goal>
+			      		</goals>
+			    	</execution>
+			  	</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<description>AeroParker core library.</description>
+</project>
